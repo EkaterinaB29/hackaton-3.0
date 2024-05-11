@@ -16,21 +16,6 @@ const Navbar = () => {
                     <a href="/" className="icon-link"><img src="https://cdn-icons-png.flaticon.com/512/2956/2956820.png" alt="User Icon" className='icon' /></a>
                 </div>
             </div>
-        
-            <div className="navbar-center">
-                <a href="/">News</a>
-                <a href="/">Clothes</a>
-                <a href="/">Shoes</a>
-                <a href="/">Sports</a>
-                <a href="/">Streetwear</a>
-                <a href="/">Accessories</a>
-                <a href="/">Underwear</a>
-                <a href="/">Premium</a>
-                <a href="/">Lowering</a>
-            </div>
-
-         
-
         </nav>
     
     );
