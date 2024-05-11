@@ -6,6 +6,8 @@ import ProductDetails from './Components/ProductDetails';
 import Navbar from './Components/Navbar';
 import BasketProcess from './Components/BasketProcess';
 import { useEffect } from 'react';
+import Address from './Components/Address';
+import Payment from './Components/Payment';
 
 function App() {
   const [basket, setBasket] = useState(() => {
@@ -49,6 +51,8 @@ const addToBasket = (productId) => {
           <Route path="/login" element={<Login />}/>
           <Route path="/products/:id" element={<ProductDetails addToBasket={addToBasket} products={products} />} />
           <Route path="/basket" element={<BasketProcess basket={basket} />} />
+          <Route path="/address" element={<Address />} />
+          <Route path="/payment" element={<Payment />} />
         </Routes>
       </div>
     </Router>
