@@ -10,7 +10,11 @@ const { User } = require('./user/User');  // Adjust the path as necessary
 const BlockchainInterface = require('./transactions/blockchainInterface');
 const blockchainInterface = new BlockchainInterface('https://mainnet.infura.io/v3/7f7336b604014a63a4fe74c89f2d8cd5');
 
-const web3 = new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/7f7336b604014a63a4fe74c89f2d8cd5');
+const web3 = new Web3 (new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/7f7336b604014a63a4fe74c89f2d8cd5'));
+const jwt = require('jsonwebtoken');
+
+require('dotenv').config(); // Make sure this is at the top of your main file
+const SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 // Initialize all components
 const apiClient = new ApiClient('https://api.example.com');
@@ -37,26 +41,46 @@ app.use((req, res, next) => {
   });
   app.use(cors()); 
 
+  
 
-  app.post('/check-wallet', async (req, res) => {
+
+  app.get('/verify-wallet/:email', async (req, res) => {
     try {
-        const { email } = req.body;
+        const email = req.params.email;
         const user = await User.findByEmail(email);
         if (!user) {
             return res.status(404).send({ error: "User not found" });
         }
 
-        const walletExists = await blockchainInterface.checkTransactionPossible(user.publicKey, 'dummy_to_address', '0');
-        if (walletExists) {
-            res.send({ message: "Wallet is active and has sufficient balance" });
+        const walletAddress = user.wallet_id;
+        const balance = await web3.eth.getBalance(walletAddress);
+
+        if (web3.utils.toBN(balance).isZero()) {
+            res.send({ status: 'inactive', message: "This wallet has no balance" });
         } else {
-            res.status(400).send({ error: "Wallet does not have sufficient balance or does not exist" });
+            res.send({ status: 'active', message: "This wallet is active with a balance" });
         }
     } catch (error) {
         console.error(error);
         res.status(500).send({ error: "Server error" });
     }
 });
+app.get('/verify-token', (req, res) => {
+    const token = req.headers['x-access-token'];
+
+    if (!token) {
+        return res.status(401).send('Token not provided');
+    }
+
+    jwt.verify(token, 'your_secret_key', (err, decoded) => {
+        if (err) {
+            return res.status(500).send('Token verification failed');
+        }
+
+        res.send(decoded);
+    });
+});
+
 
   app.post('/transaction', async (req, res) => {
     const { email, toAddress, amount } = req.body;
@@ -82,15 +106,15 @@ app.use((req, res, next) => {
         console.error(error);
         res.status(500).send('Server error');
     }
+
 });
 // Test Web3 functionality
 console.log(web3.version);
-web3.eth.getBlockNumber().then(console.log);
-web3.eth.getBalance('0x123...').then(console.log);  // Replace '0x123...' with a real address
-web3.eth.getTransactionCount('0x123...').then(console.log);
-web3.eth.getGasPrice().then(console.log);
-web3.eth.getChainId().then(console.log);
-web3.eth.net.getId().then(console.log);
+
+web3.eth.net.isListening()
+    .then(() => console.log('Successfully connected to the Ethereum network'))
+    .catch(e => console.error('Something went wrong connecting to the Ethereum network:', e));
+
 
 
 
@@ -106,6 +130,24 @@ User.findByEmail(connection, 'hackaton@gmail.com').then(user => {
 }).catch(err => {
     console.error(err);
 });
+
+// Signing a JWT
+const user = { id: 1, username: 'testuser' };
+const secretKey = 'your_secret_key';
+
+const token = jwt.sign(user, secretKey, { expiresIn: '1h' });
+
+console.log(token);
+
+// Verifying a JWT
+jwt.verify(token, secretKey, (err, decoded) => {
+  if (err) {
+    console.error('JWT verification failed:', err);
+  } else {
+    console.log('Decoded JWT:', decoded);
+  }
+});
+
 
 // Example usage: Process a payment
 // (async () => {
