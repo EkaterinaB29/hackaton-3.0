@@ -28,12 +28,6 @@ router.post('/login', (req, res) => {
             res.json({
                 message: 'Login successful',
                 token: token,
-                loggedIn: true
-            });
-            const token = jwt.sign({ id: results[0].id }, 'your_secret_key', { expiresIn: '1h' });
-            res.json({
-                message: 'Login successful',
-                token: token,
                 loggedin: true
             });
             console.log('Login successful');
