@@ -1,21 +1,28 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Import axios
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
-    };
-
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Perform login logic here
+        try {
+            const response = await axios.post('/api/login', { username, password });
+            if (response.status === 200) {
+                // Login successful
+                console.log('Login successful');
+                // You can redirect the user to another page here, or set user data in your state
+            } else {
+                // The server responded with a status other than 200
+                console.log(`Login failed with status: ${response.status}`);
+            }
+        } catch (error) {
+            // An error occurred while performing the request
+            console.log('An error occurred while logging in:', error);
+        }
     };
+    
 
     return (
         <form onSubmit={handleSubmit}>
@@ -25,7 +32,6 @@ const Login = () => {
                     type="text"
                     id="username"
                     value={username}
-                    onChange={handleUsernameChange}
                     required
                 />
             </div>
@@ -35,7 +41,6 @@ const Login = () => {
                     type="password"
                     id="password"
                     value={password}
-                    onChange={handlePasswordChange}
                     required
                 />
             </div>
