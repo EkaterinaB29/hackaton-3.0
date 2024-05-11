@@ -1,6 +1,4 @@
-const EC = require('elliptic').ec;
 const SHA256 = require('crypto-js/sha256');
-const ec = new EC('secp256k1');
 
 class Transaction {
     constructor(fromAddress, toAddress, amount) {
@@ -8,6 +6,7 @@ class Transaction {
         this.toAddress = toAddress;
         this.amount = amount;
         this.timestamp = Date.now();
+        this.signature = null;
     }
 
     calculateHash() {
@@ -32,4 +31,4 @@ class Transaction {
     }
 }
 
-module.exports = { Transaction, ec };
+module.exports = Transaction;
