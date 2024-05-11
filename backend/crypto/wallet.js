@@ -1,6 +1,6 @@
 
 const { ec: EC } = require('elliptic');
-const { User } = require();
+const { User } = require('user/User');
 const ec = new EC('secp256k1');
 
 class Wallet {
