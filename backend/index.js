@@ -1,4 +1,4 @@
-const BlockchainInterface = require('./blockchain/blockchainInterface');
+// const BlockchainInterface = require('./blockchain/blockchainInterface');
 const ExchangeService = require('./services/exchangeService');
 const PaymentProcessor = require('./services/paymentProcessor');
 const WalletDB = require('./database/walletDB'); // You need to implement this based on your DB schema
