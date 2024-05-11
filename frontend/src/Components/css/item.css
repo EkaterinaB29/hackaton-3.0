@@ -1,0 +1,39 @@
+/* item.css */
+
+/* Container styles */
+div .items{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+}
+
+/* Sponsored text styles */
+p:first-child {
+    font-weight: bold;
+    color: #ff0000;
+}
+
+/* Font text styles */
+p:nth-child(2) {
+    font-family: Roboto, sans-serif;
+    margin-top: 5px;
+}
+
+/* Image styles */
+img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin-top: 10px;
+}
+
+/* Price text styles */
+p:last-child {
+    font-weight: bold;
+    margin-top: 10px;
+}
