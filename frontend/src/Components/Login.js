@@ -5,21 +5,22 @@ import './css/login.css'; // Ensure the CSS file is correctly referenced
 
 const Login = () => {
     const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [walletAddress, setWalletAddress] = useState('');
+    const [password, setPassword] = useState(''); // Email and walletAddress removed as per the requirement
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const loginUrl = 'http://88.200.64.122/api/login'; // HTTP or HTTPS based on your server config
+
         try {
-            const response = await axios.post('/api/login', { username, email, password, walletAddress });
-            if (response.status === 200) {
+            const response = await axios.post(loginUrl, { username, password });
+            if (response.data.loggedIn) { // Assuming the API sends back a field `loggedIn`
                 console.log('Login successful');
+                // Optionally redirect the user or perform further actions
             } else {
-                console.log(`Login failed with status: ${response.status}`);
+                console.log('Login failed: ', response.data.message); // Assuming there's a message field in the response
             }
         } catch (error) {
-            console.log('An error occurred while logging in:', error);
+            console.log('An error occurred while logging in:', error.response ? error.response.data : error.message);
         }
     };
 
@@ -39,16 +40,6 @@ const Login = () => {
                         />
                     </div>
                     <div className="field-container">
-                        <label htmlFor="email">Email:</label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="field-container">
                         <label htmlFor="password">Password:</label>
                         <input
                             type="password"
@@ -56,15 +47,6 @@ const Login = () => {
                             value={password}
                             onChange={e => setPassword(e.target.value)}
                             required
-                        />
-                    </div>
-                    <div className="field-container">
-                        <label htmlFor="walletAddress">Wallet Address:</label>
-                        <input
-                            type="text"
-                            id="walletAddress"
-                            value={walletAddress}
-                            onChange={e => setWalletAddress(e.target.value)}
                         />
                     </div>
                     <button type="submit">Login</button>
