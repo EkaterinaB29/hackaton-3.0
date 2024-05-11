@@ -63,3 +63,10 @@
         width: 100%; /* Full width on small screens */
     }
 }
+
+.lumos-name{
+    font-size: 6em;
+    font-weight: bold;
+    color: #000;
+    padding-left: 10em;
+}

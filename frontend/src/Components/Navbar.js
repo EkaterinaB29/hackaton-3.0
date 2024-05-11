@@ -10,6 +10,9 @@ const Navbar = () => {
                     <a href="/">Men</a>
                     <a href="/">Children</a>
                 </div>
+                <div>
+                <a className="lumos-name" href="/">Lumos</a>
+                </div>
                 <div className="navbar-right">
                     <input type="search" placeholder="Search" className="search-input" />
                     <a href="/login" className="icon-link"><img src="https://cdn-icons-png.flaticon.com/512/4308/4308439.png" alt="Heart Icon" className='icon' /></a>

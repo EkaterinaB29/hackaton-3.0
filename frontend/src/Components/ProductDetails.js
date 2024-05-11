@@ -18,7 +18,7 @@ const ProductDetails = ({ products }) => {
             </div>
             <div className="info-section">
                 <h1>{product.name}</h1>
-                <p className="price">{product.price}€ VAT is included</p>
+                <p className="price">{product.price}€</p>
                 <p>Color: {product.color}</p>
                 <div className="size-selector">
                     <label htmlFor="size">Size:</label>
@@ -28,7 +28,7 @@ const ProductDetails = ({ products }) => {
                 </div>
                 <button>Add to Basket</button>
                 <div className="delivery-info">
-                    <p>Sold and shipped by Zalando</p>
+                    <p>Sold and shipped by Lumus</p>
                     <p>2 - 5 working days</p>
                     <p>Standard delivery free of charge</p>
                     <p>Free shipping and free returns</p>
