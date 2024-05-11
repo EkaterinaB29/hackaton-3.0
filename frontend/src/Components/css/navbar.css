@@ -1,27 +1,25 @@
 .navbar-container {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between; /* Align items to the edges */
     align-items: center;
-    background-color: #fff; /* Set the background to white */
-    padding: 10px 20px;
+    background-color: #c2c2c2; /* Grey background, change as needed */
+    padding: 1em 2em; /* Top and bottom padding, adjust side padding to push content to edges */
 }
 
 .navbar-left, .navbar-center, .navbar-right {
     display: flex;
     align-items: center;
-
+    
 }
 
-.navbar-center{
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-between;
+.navbar-center {
+    flex-grow: 1; /* Allows the center to expand and fill the space */
+    justify-content: space-between; /* Center the items */
+    flex-wrap: wrap; /* Allows items to wrap if there isn't enough space */
 }
 
 .navbar-left .logo {
-    margin-right: 20px;
+    margin-right: 20px; /* Space after logo */
     height: 40px; /* Adjust the logo size */
 }
 
@@ -29,7 +27,7 @@
     margin-right: 10px;
     color: black;
     text-decoration: none;
-    font-size: 14px; /* Set the font size for navigation links */
+    font-size: 14px; /* Font size for navigation links */
 }
 
 .search-input {
@@ -41,18 +39,19 @@
 
 .icon-link {
     display: flex;
-    margin-left: 10px;
+    margin-left: 10px; /* Space between icons */
 }
 
 .icon-link .icon {
-    height: 2.5em; /* Set icon size */
+    height: 2.5em; /* Icon size */
     width: auto;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     .navbar-container {
         flex-direction: column;
+        padding: 1em; /* Less padding on smaller screens */
     }
 
     .navbar-left, .navbar-center, .navbar-right {

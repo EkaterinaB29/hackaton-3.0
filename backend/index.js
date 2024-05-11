@@ -17,6 +17,17 @@ const walletDB = new WalletDB(); // Make sure to implement methods such as getWa
 // Create the Payment Processor
 const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService, walletDB);
 
+const connection = mysql.createConnection({ // RETRIEVE YOUR DATABASE CREDENTIALS
+    host: '88.200.64.122',
+    user: 'hackaton',
+    password: 'pepe',
+    database: 'hackaton'
+});
+connection.connect(err => {
+    if (err) throw err;
+    console.log("Connected to the database successfully!");
+});
+
 // Example usage: Process a payment
 (async () => {
     try {
