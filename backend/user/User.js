@@ -2,16 +2,7 @@ import bcrypt from 'bcryptjs';
 import mysql from 'mysql';
 
 // Database connection setup
-const connection = mysql.createConnection({ // RETRIEVE YOUR DATABASE CREDENTIALS
-    host: '88.200.64.122',
-    user: 'hackaton',
-    password: 'pepe',
-    database: 'hackaton'
-});
-connection.connect(err => {
-    if (err) throw err;
-    console.log("Connected to the database successfully!");
-});
+
 class User {
     constructor(username, email, password) {
         this.username = username;
