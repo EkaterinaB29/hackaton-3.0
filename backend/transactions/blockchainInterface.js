@@ -5,6 +5,32 @@ class BlockchainInterface {
         // Initialize a new instance of Web3 using a provider, e.g., HTTP provider
         this.web3 = new Web3(provider);
     }
+    /**
+     * Check if a transaction is possible based on the account balance and gas fees.
+     * @param {string} fromAddress - The Ethereum address derived from the public key.
+     * @param {string} toAddress - The recipient's Ethereum address.
+     * @param {number} amount - The amount to send.
+     * @returns {Promise<boolean>} - Whether the transaction is possible.
+     */
+    async checkTransactionPossible(fromAddress, toAddress, amount) {
+        try {
+            const balance = await this.web3.eth.getBalance(fromAddress);
+            const balanceInEther = this.web3.utils.fromWei(balance, 'ether');
+
+            const gasPrice = await this.web3.eth.getGasPrice();
+            const estimatedGas = await this.web3.eth.estimateGas({
+                to: toAddress,
+                value: this.web3.utils.toWei(amount.toString(), 'ether')
+            });
+
+            const totalCost = parseFloat(amount) + this.web3.utils.fromWei((estimatedGas * gasPrice).toString(), 'ether');
+
+            return totalCost <= balanceInEther;
+        } catch (error) {
+            console.error("Error checking transaction possibility:", error);
+            throw new Error("Failed to check transaction possibility: " + error.message);
+        }
+    }
 
     /**
      * Send a transaction to the Ethereum blockchain with dynamic gas calculation and enhanced security.

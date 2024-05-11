@@ -62,5 +62,22 @@ app.use('/api', require('./routes/userRoute'));
 //         console.error("Error processing payment:", error);
 //     }
 // })();
+/*app.post('/submit-transaction', async (req, res) => {
+    try {
+      const { signedTransaction, crypto, fiat } = req.body;
+      const result = await paymentProcessor.processPayment(signedTransaction, crypto, fiat);
+      res.send({
+        message: 'Transaction processed successfully',
+        data: result
+      });
+    } catch (error) {
+      console.error('Error processing transaction:', error);
+      res.status(500).send({
+        message: 'Failed to process the transaction',
+        error: error.toString()
+      });
+    }
+  });
+  */
 
 
