@@ -25,7 +25,7 @@ const Navbar = () => {
     
 
     return (
-        <nav className="navbar-container">
+        <nav className="navbar-container" onMouseLeave={() => setIsHovered(false)}>
             <div className="navbar-center">
                 <div className="navbar-left">
                     <a href="/">Women</a>
@@ -33,38 +33,35 @@ const Navbar = () => {
                     <a href="/">Children</a>
                 </div>
                 <div>
-                <a className="lumos-name" href="/">Lumos</a>
+                    <a className="lumos-name" href="/">Lumos</a>
                 </div>
                 <div className="navbar-right">
                     <input type="search" placeholder="Search" className="search-input" />
-                    <a href="/login" className="icon-link"><img src="https://cdn-icons-png.flaticon.com/512/4308/4308439.png" alt="Heart Icon" className='icon' /></a>
-                    <a href="/basket" className="icon-link" data-tip 
-                data-for='basketTooltip' 
-                onMouseEnter={() => setIsHovered(true)} 
-                onMouseLeave={() => setIsHovered(false)}
-                ><img src="https://cdn-icons-png.flaticon.com/512/2956/2956820.png" alt="User Icon" className='icon' /></a>
-                 {isHovered && basket && (
-                    basket.map((productId) => {
-                        const product = products.find(product => product.id === productId);
-                        return (
-                            <Item 
-                                key={product.id} 
-                                id={product.id} 
-                                font={product.font} 
-                                price={product.price} 
-                                imagePath={product.imagePath} 
-                                brand={product.brand}
-                            />
-                        );
-                    })
-                )}
+                    <a href="/login" className="icon-link">
+                        <img src="https://cdn-icons-png.flaticon.com/512/4308/4308439.png" alt="Heart Icon" className='icon' />
+                    </a>
+                    <a href="/basket" className="icon-link" onMouseEnter={() => setIsHovered(true)}>
+                        <img src="https://cdn-icons-png.flaticon.com/512/2956/2956820.png" alt="User Icon" className='icon' />
+                    </a>
+                    {isHovered && basket && (
+                        basket.map((productId) => {
+                            const product = products.find(product => product.id === productId);
+                            return (
+                                <Item 
+                                    key={product.id} 
+                                    id={product.id} 
+                                    font={product.font} 
+                                    price={product.price} 
+                                    imagePath={product.imagePath} 
+                                    brand={product.brand}
+                                />
+                            );
+                        })
+                    )}
                 </div>
             </div>
         </nav>
-    
     );
 };
-
-
 
 export default Navbar;
