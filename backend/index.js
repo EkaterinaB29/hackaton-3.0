@@ -4,6 +4,9 @@ const PaymentProcessor = require('./services/paymentProcessor');
 const WalletDB = require('./database/walletDB'); // You need to implement this based on your DB schema
 const ApiClient = require('./api/apiClient');
 const Web3 = require('web3');
+const express = require('express');
+const app = express();
+const mysql2 = require('mysql2');
 
 // Initialize Web3 connection (assuming Ethereum's mainnet for demonstration)
 const web3Provider = new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID');
@@ -17,7 +20,7 @@ const walletDB = new WalletDB(); // Make sure to implement methods such as getWa
 // Create the Payment Processor
 const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService, walletDB);
 
-const connection = mysql.createConnection({ // RETRIEVE YOUR DATABASE CREDENTIALS
+const connection = mysql2.createConnection({ // RETRIEVE YOUR DATABASE CREDENTIALS
     host: '88.200.64.122',
     user: 'hackaton',
     password: 'pepe',
