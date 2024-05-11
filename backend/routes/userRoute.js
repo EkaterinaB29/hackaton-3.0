@@ -27,7 +27,7 @@ router.post('/login', (req, res) => {
             console.log('Login failed');
         }
     });
-});
+}); 
 
   
 module.exports = router;

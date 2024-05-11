@@ -1,12 +1,19 @@
-import React from 'react';
+import { React, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Dashboard from './Components/Dashboard';
 import Login from './Components/Login';
 import ProductDetails from './Components/ProductDetails';
+import Navbar from './Components/Navbar';
+
+import { useEffect } from 'react';
 
 function App() {
 
-  const products = [
+  const [basket, setBasket] = useState(() => {
+    const savedBasket = localStorage.getItem('basket');
+    return savedBasket ? JSON.parse(savedBasket) : [];
+});
+  const [products, setProducts] = useState([
     {id: 1, font: "Lacoste", price: "139.95", imagePath: "https://img01.ztat.net/article/spp-media-p1/7c1f83e40a21341f8272c9763c039def/23f4071413334e9a83667339719ed1ed.jpg?imwidth=1800", brand: ""},
     {id: 2, font: "Lacoste", price: "111.95", imagePath: "https://img01.ztat.net/article/spp-media-p1/725fb679e7c74782b71fad68f48b9a03/edf76db3189648bb866c0c63115eaabd.jpg?imwidth=1800&filter=packshot", brand: ""},
     {id: 3, font: "Lacoste", price: "111.95", imagePath: "https://img01.ztat.net/article/spp-media-p1/d12cb8d2529741a1b2ab00811592684a/7341ead863b342b68d77628697082304.jpg?imwidth=1800&filter=packshot", brand: ""},
@@ -15,10 +22,28 @@ function App() {
     {id: 6, font: "11", price: "54.95", imagePath: "https://img01.ztat.net/article/spp-media-p1/a1be23eca5574f518fe7082b58acc5b8/13f132d60c264c7e8fc09efaded036e2.jpg?imwidth=1800&filter=packshot", brand: ""},
     {id: 7, font: "13", price: "99.95", imagePath: "https://img01.ztat.net/article/spp-media-p1/7cfde39fc6253805a23e5cef3e8a7682/e879723b876b41a4b91b65359dfe8c47.jpg?imwidth=1800&filter=packshot", brand: ""},
     {id: 8, font: "15", price: "73.95", imagePath: "https://img01.ztat.net/article/spp-media-p1/e9e3174d034f38f09bd7003120e6e91f/ab67f76608a645e68a935aff7a0b52ff.jpg?imwidth=1800", brand: ""}
-]
+]);
 
+useEffect(() => {
+  localStorage.setItem('basket', JSON.stringify(basket));
+}, [basket]);
+
+
+const addToBasket = (productId) => {
+  setBasket((prevBasket) => {
+      if (!prevBasket.includes(productId)) {
+          const newBasket = [...prevBasket, productId];
+          localStorage.setItem('basket', JSON.stringify(newBasket));
+          return newBasket;
+      } else {
+          console.log('Product already in basket:', productId);
+          return prevBasket;
+      }
+  });
+};
   return (
     <Router>
+      <Navbar basket={basket} />
       <div>
         <Routes>
           <Route path="/" element={<Dashboard products={products} />} />

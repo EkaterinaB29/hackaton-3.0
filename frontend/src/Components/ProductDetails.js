@@ -5,15 +5,15 @@ import Navbar from './Navbar';  // Make sure this import is correct
 
 
 const ProductDetails = ({ products, addToBasket  }) => {
-    const { id } = useParams(); // Get the id from the URL
-    const product = products.find((product) => product.id === Number(id)); // Find the product with the matching id
+    const { id } = useParams();
+    const product = products.find(product => product.id === Number(id));
 
     if (!product) {
         return <div>No product found!</div>;
     }
 
     return (
-        <div> <Navbar /> 
+        <div> 
         <div className="product-details">
             <div className="image-section">
                 <img src={product.imagePath} alt={product.name} />
@@ -28,7 +28,7 @@ const ProductDetails = ({ products, addToBasket  }) => {
                         <option>One Size</option>
                     </select>
                 </div>
-                <button onClick={() => addToBasket(product)}>Add to Basket</button>
+                <button onClick={() => addToBasket(product.id)}>Add to Basket</button>
                 <div className="delivery-info">
                     <p>Sold and shipped by Lumus</p>
                     <p>2 - 5 working days</p>

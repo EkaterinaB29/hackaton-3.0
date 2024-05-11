@@ -26,7 +26,7 @@ const Login = () => {
 
     return (
         <div>
-            <Navbar />
+            
             <div className="form-container">
                 <form onSubmit={handleSubmit}>
                     <div className="field-container">

@@ -34,7 +34,7 @@ const Dashboard = ({ products }) => {
 
     return (
         <div>
-            <Navbar onBasketHover={toggleBasketVisibility} />
+            
             <h1 className='sunglasses-header'>Sunglasses</h1>
             <div className="grid-container">
                 {products.map((product) => (
