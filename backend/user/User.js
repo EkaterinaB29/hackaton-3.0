@@ -3,10 +3,10 @@ import mysql from 'mysql';
 
 // Database connection setup
 const connection = mysql.createConnection({ // RETRIEVE YOUR DATABASE CREDENTIALS
-    host: 'localhost',
-    user: 'yourUsername',
-    password: 'yourPassword',
-    database: 'yourDatabase'
+    host: '88.200.64.122',
+    user: 'hackaton',
+    password: 'pepe',
+    database: 'hackaton'
 });
 connection.connect(err => {
     if (err) throw err;
@@ -22,11 +22,26 @@ class User {
 
     setWalletAddress(walletAddress) {
         this.walletAddress = walletAddress;
+        // Update the user's record with the new wallet address
+        const sql = 'UPDATE users SET wallet_address = ? WHERE email = ?';
+        connection.query(sql, [walletAddress, this.email], function (err, result) {
+            if (err) throw err;
+            console.log("Wallet address updated successfully!");
+        });
     }
 
     saveToDatabase() {
         const sql = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
         connection.query(sql, [this.username, this.email, this.password], (err, result) => {
+            if (err) throw err;
+            console.log("User registered successfully!");
+        });
+    }
+    
+
+    saveToDatabase() {
+        const sql = 'INSERT INTO users (username, email, password, wallet_address) VALUES (?, ?, ?, ?)';
+        connection.query(sql, [this.username, this.email, this.password, this.walletAddress], (err, result) => {
             if (err) throw err;
             console.log("User registered successfully!");
         });
