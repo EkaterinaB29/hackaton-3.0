@@ -1,9 +1,10 @@
 import React from 'react';
 import './css/productDetails.css'; // Ensure to create and import CSS for styling
 import { useParams } from 'react-router-dom';
+import Navbar from './Navbar';  // Make sure this import is correct
 
 
-const ProductDetails = ({ products }) => {
+const ProductDetails = ({ products, addToBasket  }) => {
     const { id } = useParams(); // Get the id from the URL
     const product = products.find((product) => product.id === Number(id)); // Find the product with the matching id
 
@@ -12,6 +13,7 @@ const ProductDetails = ({ products }) => {
     }
 
     return (
+        <div> <Navbar /> 
         <div className="product-details">
             <div className="image-section">
                 <img src={product.imagePath} alt={product.name} />
@@ -26,7 +28,7 @@ const ProductDetails = ({ products }) => {
                         <option>One Size</option>
                     </select>
                 </div>
-                <button>Add to Basket</button>
+                <button onClick={() => addToBasket(product)}>Add to Basket</button>
                 <div className="delivery-info">
                     <p>Sold and shipped by Lumus</p>
                     <p>2 - 5 working days</p>
@@ -35,6 +37,7 @@ const ProductDetails = ({ products }) => {
                     <p>100-day return period</p>
                 </div>
             </div>
+        </div>
         </div>
     );
 };

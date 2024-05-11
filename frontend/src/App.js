@@ -23,7 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard products={products} />} />
           <Route path="/login" element={<Login />}/>
-          <Route path="/products/:id" element={<ProductDetails products={products} />} />
+          <Route path="/products/:id" element={<ProductDetails addToBasket={addToBasket} products={products} />} />
         </Routes>
       </div>
     </Router>

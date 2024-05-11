@@ -1,0 +1,22 @@
+/* basket.css */
+.basket-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px; 
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.basket-overlay.open {
+    transform: translateX(0);
+}
+
+.basket-content {
+    background: white;
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto; 
+}
