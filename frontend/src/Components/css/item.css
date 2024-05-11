@@ -1,7 +1,8 @@
 /* item.css */
 
 /* Container styles */
-div .items{
+.items {
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -9,22 +10,23 @@ div .items{
     border: 1px solid #ccc;
     padding: 10px;
     margin: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for transform and box-shadow */
 }
 
 /* Sponsored text styles */
-p:first-child {
+.items p:first-child {
     font-weight: bold;
     color: #ff0000;
 }
 
 /* Font text styles */
-p:nth-child(2) {
+.items p:nth-child(2) {
     font-family: Roboto, sans-serif;
     margin-top: 5px;
 }
 
 /* Image styles */
-img {
+.items img {
     width: 100%;
     max-width: 300px;
     height: auto;
@@ -32,7 +34,13 @@ img {
 }
 
 /* Price text styles */
-p:last-child {
+.items p:last-child {
     font-weight: bold;
     margin-top: 10px;
+}
+
+/* Apply the scale, box-shadow, and background-color transformations on hover */
+.items:hover {
+    transform: scale(1.1); /* Scale up on hover */
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5); /* Add a subtle box-shadow */
 }
