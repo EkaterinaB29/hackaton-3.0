@@ -1,17 +1,19 @@
 import bcrypt from 'bcryptjs';
-import mysql from 'mysql';
+import mysql from 'mysql2';  // Import mysql2 instead of mysql
 
-// Database connection setup
-const connection = mysql.createConnection({ // RETRIEVE YOUR DATABASE CREDENTIALS
+// Database connection setup using mysql2
+const connection = mysql.createConnection({
     host: '88.200.64.122',
     user: 'hackaton',
     password: 'pepe',
     database: 'hackaton'
 });
+
 connection.connect(err => {
     if (err) throw err;
     console.log("Connected to the database successfully!");
 });
+
 class User {
     constructor(username, email, password) {
         this.username = username;
@@ -21,44 +23,44 @@ class User {
     }
 
     setWalletAddress(walletAddress) {
-        this.walletAddress = walletAddress;
-        // Update the user's record with the new wallet address
         const sql = 'UPDATE users SET wallet_address = ? WHERE email = ?';
-        connection.query(sql, [walletAddress, this.email], function (err, result) {
-            if (err) throw err;
-            console.log("Wallet address updated successfully!");
-        });
+        // Using Promises with mysql2
+        connection.promise().query(sql, [walletAddress, this.email])
+            .then(([result, fields]) => {
+                console.log("Wallet address updated successfully!");
+            })
+            .catch(err => {
+                console.error("An error occurred:", err.message);
+            });
     }
-
-    saveToDatabase() {
-        const sql = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
-        connection.query(sql, [this.username, this.email, this.password], (err, result) => {
-            if (err) throw err;
-            console.log("User registered successfully!");
-        });
-    }
-    
 
     saveToDatabase() {
         const sql = 'INSERT INTO users (username, email, password, wallet_address) VALUES (?, ?, ?, ?)';
-        connection.query(sql, [this.username, this.email, this.password, this.walletAddress], (err, result) => {
-            if (err) throw err;
-            console.log("User registered successfully!");
-        });
+        // Using async/await with mysql2 Promises for cleaner error handling
+        return connection.promise().query(sql, [this.username, this.email, this.password, this.walletAddress])
+            .then(([result, fields]) => {
+                console.log("User registered successfully!");
+            })
+            .catch(err => {
+                console.error("An error occurred:", err.message);
+            });
     }
 
-    static findByEmail(email, callback) {
+    static async findByEmail(email) {
         const sql = 'SELECT * FROM users WHERE email = ?';
-        connection.query(sql, [email], (err, results) => {
-            if (err) return callback(err, null);
+        try {
+            const [results, fields] = await connection.promise().query(sql, [email]);
             if (results.length > 0) {
                 const user = new User(results[0].username, results[0].email, results[0].password);
                 user.walletAddress = results[0].wallet_address;
-                return callback(null, user);
+                return user;
             } else {
-                return callback("User not found", null);
+                throw new Error("User not found");
             }
-        });
+        } catch (err) {
+            console.error("An error occurred:", err.message);
+            throw err;  // Rethrow to let the caller handle the error
+        }
     }
 }
 
