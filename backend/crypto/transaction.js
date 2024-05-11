@@ -9,11 +9,11 @@ class Transaction {
         this.signature = null;
     }
 
-    calculateHash() {
+    calculateHash() { // Calculate the hash of the transaction (a unique ID)
         return SHA256(this.fromAddress + this.toAddress + this.amount + this.timestamp).toString();
     }
 
-    signTransaction(signingKey) {
+    signTransaction(signingKey) { // Sign the transaction (called by the sender)
         if (signingKey.getPublic('hex') !== this.fromAddress) {
             throw new Error('You cannot sign transactions for other wallets!');
         }
