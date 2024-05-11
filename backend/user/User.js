@@ -3,10 +3,10 @@ import mysql from 'mysql';
 
 // Database connection setup
 const connection = mysql.createConnection({ // RETRIEVE YOUR DATABASE CREDENTIALS
-    host: 'localhost',
-    user: 'yourUsername',
-    password: 'yourPassword',
-    database: 'yourDatabase'
+    host: '88.200.64.122',
+    user: 'hackaton',
+    password: 'pepe',
+    database: 'hackaton'
 });
 connection.connect(err => {
     if (err) throw err;
