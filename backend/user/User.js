@@ -1,18 +1,18 @@
-// import bcrypt from 'bcryptjs';
+const bcrypt = require('bcryptjs');
+//const mysql = require('mysql2');
+/*
+const connection = mysql.createConnection({
+    host: '88.200.64.122',
+    user: 'hackaton',
+    password: 'pepe',
+    database: 'hackaton'
+});
 
-// Database connection setup using mysql2
-// const connection = mysql.createConnection({
-//     host: '88.200.64.122',
-//     user: 'hackaton',
-//     password: 'pepe',
-//     database: 'hackaton'
-// });
-
-// connection.connect(err => {
-//     if (err) throw err;
-//     console.log("Connected to the database successfully!");
-// });
-
+connection.connect(err => {
+    if (err) throw err;
+    console.log("Connected to the database successfully!");
+});
+*/
 class User {
     constructor(username, email, password) {
         this.username = username;
@@ -23,9 +23,8 @@ class User {
 
     setWalletAddress(walletAddress) {
         const sql = 'UPDATE users SET wallet_address = ? WHERE email = ?';
-        // Using Promises with mysql2
         connection.promise().query(sql, [walletAddress, this.email])
-            .then(([result, fields]) => {
+            .then(([results, fields]) => {
                 console.log("Wallet address updated successfully!");
             })
             .catch(err => {
@@ -35,9 +34,8 @@ class User {
 
     saveToDatabase() {
         const sql = 'INSERT INTO users (username, email, password, wallet_address) VALUES (?, ?, ?, ?)';
-        // Using async/await with mysql2 Promises for cleaner error handling
         return connection.promise().query(sql, [this.username, this.email, this.password, this.walletAddress])
-            .then(([result, fields]) => {
+            .then(([results, fields]) => {
                 console.log("User registered successfully!");
             })
             .catch(err => {
@@ -59,12 +57,9 @@ class User {
             }
         } catch (err) {
             console.error("An error occurred:", err.message);
-            throw err;  // Rethrow to let the caller handle the error
+            throw err;
         }
     }
-
-    
-
 }
 
-module.export = { User };
+module.exports = { User };

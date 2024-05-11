@@ -8,7 +8,8 @@ const express = require('express');
 const app = express();
 const mysql2 = require('mysql2');
 const cors = require('cors');
-const user = require('./user/User');
+const { User } = require('./user/User');  // Adjust the path as necessary
+
 
 
 
@@ -50,8 +51,13 @@ app.listen(PORT, () => {
 });
 
 app.use('/api', require('./routes/userRoute'));
+console.log(User); // Check what is imported
+User.findByEmail(connection, 'hackaton@gmail.com').then(user => {
+    console.log(user);
+}).catch(err => {
+    console.error(err);
+});
 
-user.findByEmail(connection, 'hackaton@gmail.com');
 // Example usage: Process a payment
 // (async () => {
 //     try {
