@@ -12,7 +12,7 @@ const cors = require('cors');
 
 
 // Initialize Web3 connection (assuming Ethereum's mainnet for demonstration)
-// const web3Provider = new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID');
+// const web3Provider = new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/7f7336b604014a63a4fe74c89f2d8cd5');
 
 // Initialize all components
 const apiClient = new ApiClient('https://api.example.com');
@@ -21,7 +21,7 @@ const apiClient = new ApiClient('https://api.example.com');
 // const walletDB = new WalletDB(); // Make sure to implement methods such as getWallet
 
 // Create the Payment Processor
-// const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService, walletDB);
+// const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
 
 const connection = mysql2.createConnection({ // RETRIEVE YOUR DATABASE CREDENTIALS
     host: '88.200.64.122',
