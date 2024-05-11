@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 
-const jwt = require('jsonwebtoken');
 
 // POST endpoint for /api
 router.get('/userinfo', (req, res) => {
