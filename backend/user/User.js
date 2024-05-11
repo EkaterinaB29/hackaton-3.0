@@ -1,18 +1,17 @@
-import bcrypt from 'bcryptjs';
-import mysql from 'mysql2';  // Import mysql2 instead of mysql
+// import bcrypt from 'bcryptjs';
 
 // Database connection setup using mysql2
-const connection = mysql.createConnection({
-    host: '88.200.64.122',
-    user: 'hackaton',
-    password: 'pepe',
-    database: 'hackaton'
-});
+// const connection = mysql.createConnection({
+//     host: '88.200.64.122',
+//     user: 'hackaton',
+//     password: 'pepe',
+//     database: 'hackaton'
+// });
 
-connection.connect(err => {
-    if (err) throw err;
-    console.log("Connected to the database successfully!");
-});
+// connection.connect(err => {
+//     if (err) throw err;
+//     console.log("Connected to the database successfully!");
+// });
 
 class User {
     constructor(username, email, password) {
@@ -46,7 +45,7 @@ class User {
             });
     }
 
-    static async findByEmail(email) {
+    static async findByEmail(connection, email) {
         const sql = 'SELECT * FROM users WHERE email = ?';
         try {
             const [results, fields] = await connection.promise().query(sql, [email]);
@@ -55,6 +54,7 @@ class User {
                 user.walletAddress = results[0].wallet_address;
                 return user;
             } else {
+                console.log("User not found");
                 throw new Error("User not found");
             }
         } catch (err) {
@@ -62,6 +62,9 @@ class User {
             throw err;  // Rethrow to let the caller handle the error
         }
     }
+
+    
+
 }
 
-export { User };
+module.export = { User };

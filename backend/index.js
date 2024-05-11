@@ -8,6 +8,7 @@ const express = require('express');
 const app = express();
 const mysql2 = require('mysql2');
 const cors = require('cors');
+const user = require('./user/User');
 
 
 
@@ -50,6 +51,7 @@ app.listen(PORT, () => {
 
 app.use('/api', require('./routes/userRoute'));
 
+user.findByEmail(connection, 'hackaton@gmail.com');
 // Example usage: Process a payment
 // (async () => {
 //     try {
