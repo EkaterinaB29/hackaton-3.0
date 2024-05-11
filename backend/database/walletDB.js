@@ -28,6 +28,7 @@ class WalletDB {
         }
         return null;
     }
+    
 }
 
 module.exports = WalletDB;
