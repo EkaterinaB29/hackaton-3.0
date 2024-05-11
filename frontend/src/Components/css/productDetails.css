@@ -1,0 +1,41 @@
+.product-details {
+    display: flex;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.image-section img {
+    width: 50%;
+    height: auto;
+}
+
+.info-section {
+    padding: 20px;
+    width: 50%;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.size-selector {
+    margin: 20px 0;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: grey;
+}
+
+.delivery-info p {
+    margin-top: 10px;
+}
