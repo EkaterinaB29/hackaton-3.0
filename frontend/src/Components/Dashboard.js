@@ -25,12 +25,12 @@ const Dashboard = ({ products }) => {
         setIsBasketVisible(false);
     };
 
-        // Define addToBasket function
-        const addToBasket = (product) => {
-            const newBasketItems = [...basketItems, product];
-            setBasketItems(newBasketItems);
-            setIsBasketVisible(true); // Show basket when item is added
-        };
+    // Define addToBasket function
+    const addToBasket = (product) => {
+        const newBasketItems = [...basketItems, product];
+        setBasketItems(newBasketItems);
+        setIsBasketVisible(true); // Show basket when item is added
+    };
 
     return (
         <div>

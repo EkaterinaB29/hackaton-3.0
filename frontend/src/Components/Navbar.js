@@ -38,7 +38,7 @@ const Navbar = () => {
                 <div className="navbar-right">
                     <input type="search" placeholder="Search" className="search-input" />
                     <a href="/login" className="icon-link"><img src="https://cdn-icons-png.flaticon.com/512/4308/4308439.png" alt="Heart Icon" className='icon' /></a>
-                    <a href="/" className="icon-link" data-tip 
+                    <a href="/basket" className="icon-link" data-tip 
                 data-for='basketTooltip' 
                 onMouseEnter={() => setIsHovered(true)} 
                 onMouseLeave={() => setIsHovered(false)}
@@ -60,7 +60,6 @@ const Navbar = () => {
                 )}
                 </div>
             </div>
-            <div>Basket: {basket.length}</div>
         </nav>
     
     );

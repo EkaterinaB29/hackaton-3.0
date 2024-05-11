@@ -4,6 +4,7 @@ import Dashboard from './Components/Dashboard';
 import Login from './Components/Login';
 import ProductDetails from './Components/ProductDetails';
 import Navbar from './Components/Navbar';
+import BasketProcess from './Components/BasketProcess';
 
 import { useEffect } from 'react';
 
@@ -49,6 +50,7 @@ const addToBasket = (productId) => {
           <Route path="/" element={<Dashboard products={products} />} />
           <Route path="/login" element={<Login />}/>
           <Route path="/products/:id" element={<ProductDetails addToBasket={addToBasket} products={products} />} />
+          <Route path="/basket" element={<BasketProcess basket={basket} />} />
         </Routes>
       </div>
     </Router>
