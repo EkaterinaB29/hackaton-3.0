@@ -21,7 +21,8 @@ const BasketProcess = ({ basket }) => {
     }, 0).toFixed(2);
 
     const handleCheckout = () => {
-        navigate('/login'); // Use navigate to redirect to login page
+        if ( localStorage.getItem('token') === null ) { navigate('/login'); }
+        else { navigate('/address'); } // Use navigate to redirect to login page
     };
 
     return (
