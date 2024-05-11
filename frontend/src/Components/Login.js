@@ -9,7 +9,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const loginUrl = 'http://88.200.64.122/api/login'; // HTTP or HTTPS based on your server config
+        const loginUrl = 'http://88.200.64.122:6500/api/login'; // HTTP or HTTPS based on your server config
 
         try {
             const response = await axios.post(loginUrl, { username, password });

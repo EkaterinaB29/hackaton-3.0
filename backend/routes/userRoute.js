@@ -21,8 +21,10 @@ router.post('/login', (req, res) => {
         if (err) throw err;
         if (results.length > 0) {
             res.send('Login successful');
+            console.log('Login successful');
         } else {
             res.send('Login failed');
+            console.log('Login failed');
         }
     });
 });

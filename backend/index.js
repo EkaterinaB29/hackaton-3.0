@@ -1,12 +1,15 @@
 // const BlockchainInterface = require('./blockchain/blockchainInterface');
 // const ExchangeService = require('./services/exchangeService');
 // const PaymentProcessor = require('./services/paymentProcessor');
-const WalletDB = require('./database/walletDB'); // You need to implement this based on your DB schema
+// const WalletDB = require('./database/walletDB'); // You need to implement this based on your DB schema
 const ApiClient = require('./api/apiClient');
 const Web3 = require('web3');
 const express = require('express');
 const app = express();
 const mysql2 = require('mysql2');
+const cors = require('cors');
+
+
 
 // Initialize Web3 connection (assuming Ethereum's mainnet for demonstration)
 // const web3Provider = new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID');
@@ -15,7 +18,7 @@ const mysql2 = require('mysql2');
 const apiClient = new ApiClient('https://api.example.com');
 // const blockchainInterface = new BlockchainInterface(web3Provider);
 // const exchangeService = new ExchangeService(apiClient);
-const walletDB = new WalletDB(); // Make sure to implement methods such as getWallet
+// const walletDB = new WalletDB(); // Make sure to implement methods such as getWallet
 
 // Create the Payment Processor
 // const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService, walletDB);
@@ -38,7 +41,7 @@ app.use((req, res, next) => {
     req.db = connection;
     next();
   });
-  
+  app.use(cors());  
 
 const PORT = process.env.PORT || 6500;
 app.listen(PORT, () => {
