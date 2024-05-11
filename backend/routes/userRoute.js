@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const jwt = require('jsonwebtoken');
+
 // POST endpoint for /api
 router.get('/userinfo', (req, res) => {
     const db = req.db;  // Access the db connection
@@ -20,10 +22,18 @@ router.post('/login', (req, res) => {
     db.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, results) => {
         if (err) throw err;
         if (results.length > 0) {
-            res.send('Login successful');
+            const token = jwt.sign({ id: results[0].id }, 'your_secret_key', { expiresIn: '1h' });
+            res.json({
+                message: 'Login successful',
+                token: token,
+                loggedIn: true
+            });
             console.log('Login successful');
         } else {
-            res.send('Login failed');
+            res.json({
+                message: 'Login failed',
+                loggedIn: false
+            });
             console.log('Login failed');
         }
     });
