@@ -1,7 +1,12 @@
 import React from 'react';
 import './css/productDetails.css'; // Ensure to create and import CSS for styling
+import { useParams } from 'react-router-dom';
 
-const ProductDetails = ({ product }) => {
+
+const ProductDetails = ({ products }) => {
+    const { id } = useParams(); // Get the id from the URL
+    const product = products.find((product) => product.id === Number(id)); // Find the product with the matching id
+
     if (!product) {
         return <div>No product found!</div>;
     }
