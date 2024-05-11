@@ -5,14 +5,12 @@ import Login from './Components/Login';
 import ProductDetails from './Components/ProductDetails';
 import Navbar from './Components/Navbar';
 import BasketProcess from './Components/BasketProcess';
-
 import { useEffect } from 'react';
 
 function App() {
-
   const [basket, setBasket] = useState(() => {
-    const savedBasket = localStorage.getItem('basket');
-    return savedBasket ? JSON.parse(savedBasket) : [];
+  const savedBasket = localStorage.getItem('basket');
+  return savedBasket ? JSON.parse(savedBasket) : [];
 });
   const [products, setProducts] = useState([
     {id: 1, font: "Lacoste", price: "139.95", imagePath: "https://img01.ztat.net/article/spp-media-p1/7c1f83e40a21341f8272c9763c039def/23f4071413334e9a83667339719ed1ed.jpg?imwidth=1800", brand: ""},
