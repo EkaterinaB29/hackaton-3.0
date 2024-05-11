@@ -12,8 +12,8 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-right">
                     <input type="search" placeholder="Search" className="search-input" />
-                    <a href="/" className="icon-link"><img src="https://cdn-icons-png.flaticon.com/512/4308/4308439.png" alt="Heart Icon" className='icon' /></a>
-                    <a href="/login" className="icon-link"><img src="https://cdn-icons-png.flaticon.com/512/2956/2956820.png" alt="User Icon" className='icon' /></a>
+                    <a href="/login" className="icon-link"><img src="https://cdn-icons-png.flaticon.com/512/4308/4308439.png" alt="Heart Icon" className='icon' /></a>
+                    <a href="/" className="icon-link"><img src="https://cdn-icons-png.flaticon.com/512/2956/2956820.png" alt="User Icon" className='icon' /></a>
                 </div>
             </div>
         </nav>
