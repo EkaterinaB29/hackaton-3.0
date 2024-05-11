@@ -1,5 +1,6 @@
 .navbar-container {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     background-color: #fff; /* Set the background to white */
@@ -9,6 +10,14 @@
 .navbar-left, .navbar-center, .navbar-right {
     display: flex;
     align-items: center;
+
+}
+
+.navbar-center{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .navbar-left .logo {
