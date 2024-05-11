@@ -2,11 +2,13 @@ import React from 'react';
 import Item from './Item'
 import './css/dashboard.css'
 import './css/item.css'
+import Navbar from './Navbar';
 
 
 const Dashboard = () => {
     return (
         <div>
+            <Navbar />
             <h1 className='sunglasses-header'>Sunglasses</h1>
             <div className="grid-container">
                 <Item font="Lacoste" price="139.95" imagePath="https://img01.ztat.net/article/spp-media-p1/7c1f83e40a21341f8272c9763c039def/23f4071413334e9a83667339719ed1ed.jpg?imwidth=1800" brand=""/>
