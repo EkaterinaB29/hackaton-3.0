@@ -11,4 +11,21 @@ router.get('/userinfo', (req, res) => {
     });
   });
 
+
+// POST endpoint for /api/login
+router.post('/login', (req, res) => {
+    const { username, password } = req.body;
+    const db = req.db;  // Access the db connection
+    // Use the db connection for your database queries
+    db.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, results) => {
+        if (err) throw err;
+        if (results.length > 0) {
+            res.send('Login successful');
+        } else {
+            res.send('Login failed');
+        }
+    });
+});
+
+  
 module.exports = router;
