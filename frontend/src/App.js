@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Dashboard from './Components/Dashboard';
 import Navbar from './Components/Navbar';
+import Login from './Components/Login';
 
 function App() {
   return (
@@ -11,14 +12,12 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/login" element={<Login />}/>
         </Routes>
       </div>
     </Router>
   );
 }
 
-function Home() {
-  return <h2>Home Page</h2>;
-}
 
 export default App;
