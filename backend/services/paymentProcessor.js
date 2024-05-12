@@ -4,17 +4,17 @@ class PaymentProcessor {
         this.user = user;
     }
 
-    async processPayment(fromAddress, toAddress, amount, crypto, fiat) {
+    async processPayment(fromAddress, toAddress, amount) {
         try {
             // Convert the amount from the original currency (crypto) to the desired currency (fiat or another crypto)
             
-            const amountInWei = this.blockchainInterface.web3.utils.toWei(convertedAmount.toString(), 'ether');
+            //const amountInWei = this.blockchainInterface.web3.utils.toWei(convertedAmount.toString(), 'ether');
 
             // Create the transaction object
             const transaction = {
                 from: fromAddress,
                 to: toAddress,
-                value: amountInWei,  // Ensure this is the correct format for the blockchain interface
+                value: amount,  // Ensure this is the correct format for the blockchain interface
                 gas: 21000,  // Standard gas limit for ETH transfers, adjust based on transaction complexity
                 gasPrice: await this.blockchainInterface.web3.eth.getGasPrice()  // Fetch current gas price
             };
@@ -25,7 +25,7 @@ class PaymentProcessor {
             return {
                 success: true,
                 transactionId: txResult.transactionHash,  // Assuming sendTransaction resolves with a result containing the transactionHash
-                convertedAmount: convertedAmount
+                message: "Payment processed successfully"
             };
         } catch (error) {
             console.error("Payment processing failed:", error);
