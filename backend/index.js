@@ -13,6 +13,10 @@ const jwt = require('jsonwebtoken');
 
 // const PaymentProcessor = require('./PaymentProcessor');
 
+<<<<<<< HEAD
+const PaymentProcessor = require('./services/paymentProcessor');
+const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
+=======
 async function createUserByEmail(connection, email, wallet) {
     return new Promise((resolve, reject) => {
         const query = 'SELECT * FROM users WHERE email = ?';
@@ -33,6 +37,7 @@ const exchangeService = require('./services/exchangeService');
 // const exchangeService = new ExchangeService();
 const PaymentProcessor = require('./services/paymentProcessor');
 // const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
+>>>>>>> 95003a953b7bdcb3fb4f24536c91f32ff81b633e
 
 require('dotenv').config(); // Make sure this is at the top of your main file
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
@@ -99,7 +104,16 @@ app.use((req, res, next) => {
     }
 });
 
-
+async function fetchCryptoRate(crypto, fiat) {
+    const apiClient = new ApiClient();
+    try {
+        const rate = await apiClient.getRate(crypto, fiat);
+        console.log(`${crypto} rate for ${fiat} is: ${rate}`);
+        return rate;
+    } catch (error) {
+        console.error('Error fetching crypto rate:', error);
+    }
+}
 
 app.post('/initiate-payment/', async (req, res) => {
     const { email, toAddress, amount, walletAddress } = req.body;
@@ -119,8 +133,7 @@ app.post('/initiate-payment/', async (req, res) => {
             return res.status(400).send({ error: "Insufficient wallet balance" });
         }
 
-        // Convert the currency
-        const convertedAmount = await exchangeService.convertToCurrency(amount, crypto, fiat);
+        const convertedAmount = await fetchCryptoRate('etherium', 'eur');
 
         // Process the payment
         const paymentResult = await paymentProcessor.processPayment(user.walletAddress, toAddress, convertedAmount, crypto, fiat);
