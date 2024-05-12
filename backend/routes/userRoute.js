@@ -39,7 +39,7 @@ router.post('/login', (req, res) => {
             });
             res.json({
                 message: 'Login failed',
-                loggedin: false
+                loggedIn: false
             });
             console.log('Login failed');
         }

@@ -11,11 +11,11 @@ const blockchainInterface = new BlockchainInterface('https://mainnet.infura.io/v
 const web3 = new Web3 (new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/7f7336b604014a63a4fe74c89f2d8cd5'));
 const jwt = require('jsonwebtoken');
 
-const PaymentProcessor = require('./PaymentProcessor');
+// const PaymentProcessor = require('./PaymentProcessor');
 
-const exchangeService = new ExchangeService();
-const PaymentProcessor = require('./services/paymentProcessor');
-const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
+// const exchangeService = new ExchangeService();
+// const PaymentProcessor = require('./services/paymentProcessor');
+// const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
 
 require('dotenv').config(); // Make sure this is at the top of your main file
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
