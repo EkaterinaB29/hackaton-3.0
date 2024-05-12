@@ -13,7 +13,6 @@ const jwt = require('jsonwebtoken');
 
 // const PaymentProcessor = require('./PaymentProcessor');
 
-<<<<<<< HEAD
 const PaymentProcessor = require('./services/paymentProcessor');
 const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
 =======
@@ -117,9 +116,8 @@ async function fetchCryptoRate(crypto, fiat) {
 
 app.post('/initiate-payment/', async (req, res) => {
     const { email, toAddress, amount, walletAddress } = req.body;
-    crypto = 'ETH';
-    fiat = 'USD';
-
+    const crypto = 'etherium';
+    const fiat = 'eur';
     try {
         // Fetch user by email to get the wallet address
         const user = await createUserByEmail(connection, email, walletAddress);
