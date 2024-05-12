@@ -13,8 +13,25 @@ const jwt = require('jsonwebtoken');
 
 // const PaymentProcessor = require('./PaymentProcessor');
 
+async function createUserByEmail(connection, email, wallet) {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM users WHERE email = ?';
+        connection.query(query, [email], (error, results) => {
+            if (error) {
+                reject(error);
+            } else if (results.length > 0) {
+                const user = new User(results[0].username, results[0].email, results[0].password, wallet);
+                console.log('User found:', user);
+                return resolve(user);
+            } else {
+                return resolve(null);
+            }
+        });
+    });
+}
+const exchangeService = require('./services/exchangeService');
 // const exchangeService = new ExchangeService();
-// const PaymentProcessor = require('./services/paymentProcessor');
+const PaymentProcessor = require('./services/paymentProcessor');
 // const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
 
 require('dotenv').config(); // Make sure this is at the top of your main file
@@ -82,12 +99,16 @@ app.use((req, res, next) => {
     }
 });
 
+
+
 app.post('/initiate-payment/', async (req, res) => {
-    const { email, toAddress, amount, crypto, fiat } = req.body;
+    const { email, toAddress, amount, walletAddress } = req.body;
+    crypto = 'ETH';
+    fiat = 'USD';
 
     try {
         // Fetch user by email to get the wallet address
-        const user = await User.findByEmail(connection, email);
+        const user = await createUserByEmail(connection, email, walletAddress);
         if (!user || !user.walletAddress) {
             return res.status(404).send({ error: "User or wallet not found" });
         }
