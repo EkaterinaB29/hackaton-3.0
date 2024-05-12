@@ -1,14 +1,13 @@
 class PaymentProcessor {
-    constructor(blockchainInterface, exchangeService, db) {
+    constructor(blockchainInterface, user) {
         this.blockchainInterface = blockchainInterface;
-        this.exchangeService = exchangeService;
-        this.db = db;  // Database access for user and wallet information
+        this.user = user;
     }
 
     async processPayment(fromAddress, toAddress, amount, crypto, fiat) {
         try {
             // Convert the amount from the original currency (crypto) to the desired currency (fiat or another crypto)
-            const convertedAmount = await this.exchangeService.convertToCurrency(amount, crypto, fiat);
+            
             const amountInWei = this.blockchainInterface.web3.utils.toWei(convertedAmount.toString(), 'ether');
 
             // Create the transaction object
