@@ -41,7 +41,7 @@
 }
 
 .checkout-button {
-    background-color: orange;
+    background-color: #61861c; /* Use a more vibrant button color */
     color: white;
     border: none;
     padding: 10px 20px;

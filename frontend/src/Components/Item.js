@@ -13,7 +13,7 @@ const Item = ({ id, name, price, imagePath, brand, font, navBool, handleAddToBas
                 <p>{price}€</p>
             </Link>
             {navBool && <button onClick={() => handleAddToBasket(product)}>Add to basket</button>}
-            {!navBool && <button onClick={() => handleAddToBasket(product)}>Remove </button>}
+            {!navBool }
         </div>
     );
 };

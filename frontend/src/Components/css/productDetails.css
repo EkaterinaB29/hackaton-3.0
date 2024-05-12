@@ -4,16 +4,17 @@
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    
 }
 
 .image-section img {
-    width: 50%;
+    width: 25em;
     height: auto;
 }
 
 .info-section {
-    padding: 20px;
-    width: 50%;
+    padding-left: 7em;
+    width: 40%;
 }
 
 .price {
@@ -27,14 +28,14 @@
 
 button {
     padding: 10px 20px;
-    background-color: black;
+    background-color: #61861c; /* Use a more vibrant button color */
     color: white;
     border: none;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: grey;
+    background-color: rgb(0, 0, 0);
 }
 
 .delivery-info p {

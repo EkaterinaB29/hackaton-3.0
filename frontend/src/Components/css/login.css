@@ -37,7 +37,7 @@ input {
 button {
     width: 100%;
     padding: 10px;
-    background-color: #0056b3;
+    background-color: #61861c; /* Use a more vibrant button color */
     color: white;
     border: none;
     border-radius: 4px;
@@ -45,5 +45,5 @@ button {
 }
 
 button:hover {
-    background-color: #004494; /* Darken button on hover */
+    background-color: #000000; /* Darken button on hover */
 }

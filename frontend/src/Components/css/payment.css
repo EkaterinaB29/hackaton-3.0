@@ -50,7 +50,7 @@ button {
 }
 
 button:hover {
-     background-color: #81b22749; /* Use a more vibrant button color */
+     background-color: #000000; /* Use a more vibrant button color */
 }
 
 #walletAddress{
