@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './css/navbar.css';
 import Item from './Item';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -24,9 +25,16 @@ const Navbar = () => {
         {id: 7, font: "13", price: "99.95", imagePath: "https://img01.ztat.net/article/spp-media-p1/7cfde39fc6253805a23e5cef3e8a7682/e879723b876b41a4b91b65359dfe8c47.jpg?imwidth=1800&filter=packshot", brand: ""},
         {id: 8, font: "15", price: "73.95", imagePath: "https://img01.ztat.net/article/spp-media-p1/e9e3174d034f38f09bd7003120e6e91f/ab67f76608a645e68a935aff7a0b52ff.jpg?imwidth=1800", brand: ""}
     ];
-
+    const navigate = useNavigate();
     const handleRemoveFromBasket = (product) => {
         setBasketItems(prevItems => prevItems.filter(item => item.id !== product.id));
+    };
+
+    // Logout function
+    const handleLogout = () => {
+        localStorage.removeItem('token');  // Remove the token from localStorage
+        localStorage.removeItem('basket');  // Remove the basket from localStorage
+        navigate('/login');  // Navigate back to the login page
     };
 
     return (
@@ -48,7 +56,7 @@ const Navbar = () => {
                     <a href="/basket" className="icon-link" onMouseEnter={() => setIsHovered(true)}>
                         <img src="https://cdn-icons-png.flaticon.com/512/2956/2956820.png" alt="User Icon" className='icon' />
                     </a>
-                    
+                    <button className="icon-link, logout" onClick={handleLogout}>x </button>
                 </div>
             </div>
         </nav>
