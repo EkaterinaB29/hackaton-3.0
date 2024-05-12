@@ -13,9 +13,8 @@ const jwt = require('jsonwebtoken');
 
 // const PaymentProcessor = require('./PaymentProcessor');
 
-const PaymentProcessor = require('./services/paymentProcessor');
-const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
-=======
+// const PaymentProcessor = require('./services/paymentProcessor');
+// const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
 async function createUserByEmail(connection, email, wallet) {
     return new Promise((resolve, reject) => {
         const query = 'SELECT * FROM users WHERE email = ?';
@@ -32,11 +31,10 @@ async function createUserByEmail(connection, email, wallet) {
         });
     });
 }
-const exchangeService = require('./services/exchangeService');
+// const exchangeService = require('./services/exchangeService');
 // const exchangeService = new ExchangeService();
-const PaymentProcessor = require('./services/paymentProcessor');
+// const PaymentProcessor = require('./services/paymentProcessor');
 // const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
->>>>>>> 95003a953b7bdcb3fb4f24536c91f32ff81b633e
 
 require('dotenv').config(); // Make sure this is at the top of your main file
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
@@ -115,9 +113,10 @@ async function fetchCryptoRate(crypto, fiat) {
 }
 
 app.post('/initiate-payment/', async (req, res) => {
-    const { email, toAddress, amount, walletAddress } = req.body;
+    const { email, toAddress, amount } = req.body;
     const crypto = 'etherium';
     const fiat = 'eur';
+    console.log(email + ' ' +  toAddress+ ' ' + amount + ' '+walletAddress + crypto + fiat)
     try {
         // Fetch user by email to get the wallet address
         const user = await createUserByEmail(connection, email, walletAddress);
