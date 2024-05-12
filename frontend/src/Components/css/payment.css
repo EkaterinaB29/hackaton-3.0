@@ -57,6 +57,7 @@ button:hover {
 }
 #walletAddress{
     margin-top: 1em;
+    width: 80%;
 }
 .smaller{
     font-size: 0.8em;
