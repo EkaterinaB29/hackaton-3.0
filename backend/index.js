@@ -54,16 +54,23 @@ app.use((req, res, next) => {
         }
 
         const walletAddress = user.wallet_id;
-        console.log('Checking wallet balance...' + walletAddress)
+        if (!walletAddress) {
+            console.error("Wallet address is undefined for user:", user);
+            return res.status(400).send({ error: "Wallet address not found for user." });
+        }
+
+         else {
+            console.log('Checking wallet balance...' + walletAddress)
         const balance = await web3.eth.getBalance(walletAddress);
 
-        if (web3.utils.toBN(balance).isZero()) {
+        if (web3.utils.toBN(balance).isZero() || web3.utils.toBN(balance).isUndefined()) {
             console.log('This wallet has no balance');
             res.send({ status: 'inactive', message: "This wallet has no balance" });
         } else {
             console.log('This wallet is active with a balance');
             res.send({ status: 'active', message: "This wallet is active with a balance" });
         }
+    }
     } catch (error) {
         console.error(error);
         res.status(500).send({ error: "Server error" });
