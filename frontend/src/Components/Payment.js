@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './css/payment.css'; // Ensure to write your CSS accordingly
+import axios from 'axios';
 
 const Payment = () => {
     const savedBasket = JSON.parse(localStorage.getItem('basket') || '[]');
@@ -23,9 +24,20 @@ const Payment = () => {
         setPaymentMethod(event.target.value);
     };
 
-    const handleProceed = () => {
-        // Placeholder function to proceed to confirmation
-        navigate('/confirm');
+    const handleProceed = async () => {
+        const email = localStorage.getItem('email'); // Replace with the key you used to save the email
+        const toAddress = document.getElementById('walletAddress').value;
+        const amount = total;
+    
+        try {
+            const response = await axios.post('http://88.200.64.122:6500/initiate-payment/', { email, toAddress, amount, walletAddress });
+    
+            // Handle success
+            console.log('Payment initiated successfully:', response.data);
+        } catch (error) {
+            // Handle error
+            console.error('Payment initiation failed:', error.response.data);
+        }
     };
 
     const total = savedBasket.reduce((acc, productId) => {

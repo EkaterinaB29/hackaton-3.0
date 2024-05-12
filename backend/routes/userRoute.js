@@ -28,15 +28,10 @@ router.post('/login', (req, res) => {
             res.json({
                 message: 'Login successful',
                 token: token,
-                loggedIn: true
+                loggedIn: true,
+                email: results[0].email
             });
-            console.log('Login successful');
-        } else {                loggedIn: false
-
-            res.json({
-                message: 'Login failed',
-                loggedIn: false
-            });
+        } else {               
             res.json({
                 message: 'Login failed',
                 loggedIn: false

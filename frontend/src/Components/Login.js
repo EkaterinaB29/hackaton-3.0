@@ -27,6 +27,7 @@ const Login = () => {
             const response = await axios.post(loginUrl, { username, password });
             if (response.data.loggedIn) {
                 localStorage.setItem('token', response.data.token); // Save the token
+                localStorage.setItem('email', response.data.email); // Save the email
                 navigate('/address'); // Navigate to address page
                 console.log('Login successful'); // Just for debugging, can remove later
             } else {

@@ -10,7 +10,7 @@ const blockchainInterface = new BlockchainInterface('https://mainnet.infura.io/v
 
 const web3 = new Web3 (new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/7f7336b604014a63a4fe74c89f2d8cd5'));
 const jwt = require('jsonwebtoken');
-
+const walletAddress = '0x123abc456def'; // Assume this is the user's wallet address
 // const PaymentProcessor = require('./PaymentProcessor');
 
 // const PaymentProcessor = require('./services/paymentProcessor');
@@ -113,11 +113,11 @@ async function fetchCryptoRate(crypto, fiat) {
     }
 }
 
-app.post('/initiate-payment/', async (req, res) => {
+app.post('/initiate-payment', async (req, res) => {
     const { email, toAddress, amount } = req.body;
     const crypto = 'etherium';
     const fiat = 'eur';
-    console.log(email + ' ' +  toAddress+ ' ' + amount + ' '+walletAddress + crypto + fiat)
+    // console.log(email + ' ' +  toAddress+ ' ' + amount + ' '+walletAddress + crypto + fiat)
     try {
         // Fetch user by email to get the wallet address
         const user = await createUserByEmail(connection, email, walletAddress);
