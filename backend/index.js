@@ -54,6 +54,7 @@ app.use((req, res, next) => {
         }
 
         const walletAddress = user.wallet_id;
+        console.log('Checking wallet balance...' + walletAddress)
         const balance = await web3.eth.getBalance(walletAddress);
 
         if (web3.utils.toBN(balance).isZero()) {
