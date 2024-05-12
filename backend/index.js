@@ -13,14 +13,8 @@ const jwt = require('jsonwebtoken');
 
 // const PaymentProcessor = require('./PaymentProcessor');
 
-<<<<<<< HEAD
 const PaymentProcessor = require('./services/paymentProcessor');
 const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
-=======
-// const exchangeService = new ExchangeService();
-// const PaymentProcessor = require('./services/paymentProcessor');
-// const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
->>>>>>> 95003a953b7bdcb3fb4f24536c91f32ff81b633e
 
 require('dotenv').config(); // Make sure this is at the top of your main file
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
@@ -99,7 +93,9 @@ async function fetchCryptoRate(crypto, fiat) {
 }
 
 app.post('/initiate-payment/', async (req, res) => {
-    const { email, toAddress, amount, crypto, fiat } = req.body;
+    const crypto = 'etherium';
+    const fiat = 'eur';
+    const { email, toAddress, amount } = req.body;
 
     try {
         // Fetch user by email to get the wallet address
