@@ -43,6 +43,10 @@ const addToBasket = (productId) => {
       }
   });
 };
+
+const handleRemoveFromBasket = (product) => {
+  setBasket(prevItems => prevItems.filter(item => item.id !== product.id));
+};
   return (
     <Router>
       <Navbar basket={basket} />

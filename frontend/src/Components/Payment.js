@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
 import './css/payment.css'; // Ensure to write your CSS accordingly
 
 const Payment = () => {

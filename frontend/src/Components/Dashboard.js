@@ -6,7 +6,6 @@ import './css/dashboard.css';
 import './css/item.css';
 
 const Dashboard = ({ products }) => {
-
     const [basketItems, setBasketItems] = useState([]);
     const [isBasketVisible, setIsBasketVisible] = useState(false);
 
@@ -14,42 +13,39 @@ const Dashboard = ({ products }) => {
         setIsBasketVisible(!isBasketVisible);
     };
 
-    // Function to handle adding items to the basket
     const handleAddToBasket = (product) => {
-        setBasketItems([...basketItems, product]);
-        setIsBasketVisible(true); // Open the basket overlay when an item is added
+        if (!basketItems.some(item => item.id === product.id)) {  // Only add if not already added
+            setBasketItems(prevItems => [...prevItems, product]);
+        }
+        setIsBasketVisible(true);
     };
 
-    // Function to close the basket overlay
-    const handleCloseBasket = () => {
-        setIsBasketVisible(false);
+    const handleRemoveFromBasket = (product) => {
+        setBasketItems(prevItems => prevItems.filter(item => item.id !== product.id));
     };
 
-    // Define addToBasket function
-    const addToBasket = (product) => {
-        const newBasketItems = [...basketItems, product];
-        setBasketItems(newBasketItems);
-        setIsBasketVisible(true); // Show basket when item is added
+    const isInBasket = (product) => {
+        return basketItems.some(item => item.id === product.id);
     };
 
     return (
-        <div>  
+        <div>
             <h1 className='sunglasses-header'>Sunglasses</h1>
             <div className="grid-container">
                 {products.map((product) => (
                     <Item 
-                        key={product.id} 
-                        id={product.id} 
-                        font={product.font} 
-                        price={product.price} 
-                        imagePath={product.imagePath} 
+                        key={product.id}
+                        id={product.id}
+                        font={product.font}
+                        price={product.price}
+                        imagePath={product.imagePath}
                         brand={product.brand}
-                        handleAddToBasket={handleAddToBasket} // Pass this function to each Item
-                        navBool={true}
+                        handleAddToBasket={handleAddToBasket}
+                        handleRemoveFromBasket={handleRemoveFromBasket}
+                        navBool={basketItems.some(item => item.id === product.id)}  // Pass true if item is in the basket
                     />
                 ))}
             </div>
-            {/* Conditionally render the Basket component based on isBasketVisible */}
             {isBasketVisible && <Basket items={basketItems} />}
         </div>
     );

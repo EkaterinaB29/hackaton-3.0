@@ -4,6 +4,9 @@
     margin-left: 10%;
     margin-top: 2%;
 }
+.your-basket{
+    margin-bottom: 1.5em;
+}
 .basket-additional{
     display: flex;
     flex-direction: row;
@@ -27,19 +30,6 @@
 .basket-item-details {
     flex-grow: 1;
 }
-
-.order-summary {
-    background-color: #f8f8f8;
-    padding: 20px;
-    border-radius: 8px;
-    margin-left: 10%;
-    width: 40%;
-}
-
-.order-summary h2 {
-    margin-top: 0;
-}
-
 .checkout-button {
     background-color: #61861c; /* Use a more vibrant button color */
     color: white;
@@ -49,4 +39,15 @@
     cursor: pointer;
     border-radius: 5px;
     margin-top: 20px;
+    width: 50%;
+}
+
+
+.order-summary {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+    margin-left: 10%;
+    width: 40%;
+    height: 100%;
 }

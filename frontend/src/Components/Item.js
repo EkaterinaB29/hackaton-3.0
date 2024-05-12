@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Item = ({ id, name, price, imagePath, brand, font, navBool, handleAddToBasket }) => {
+const Item = ({ id, name, price, imagePath, brand, font, handleAddToBasket, handleRemoveFromBasket, navBool }) => {
     const product = { id, name, price, imagePath, brand, font, navBool };
-    
+            
     return (
         <div className='items'>
             <Link to={`/products/${id}`}>
@@ -12,8 +12,9 @@ const Item = ({ id, name, price, imagePath, brand, font, navBool, handleAddToBas
                 <p>{font}</p>
                 <p>{price}€</p>
             </Link>
-            {navBool && <button onClick={() => handleAddToBasket(product)}>Add to basket</button>}
-            {!navBool }
+                          
+            {navBool ? <button onClick={() => handleRemoveFromBasket(product)}>Remove</button>
+                     : <button onClick={() => handleAddToBasket(product)}>Add to basket</button>}
         </div>
     );
 };

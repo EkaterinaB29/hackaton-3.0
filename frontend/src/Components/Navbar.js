@@ -7,6 +7,13 @@ import Item from './Item';
 const Navbar = () => {
     const [isHovered, setIsHovered] = useState(false);
 
+    const [basket, setBasket] = useState(() => {
+        const savedBasket = localStorage.getItem('basket');
+        return savedBasket ? JSON.parse(savedBasket) : [];
+    });
+    const [basketItems, setBasketItems] = useState([]);
+
+
     const products = [
         {id: 1, font: "Lacoste", price: "139.95", imagePath: "https://img01.ztat.net/article/spp-media-p1/7c1f83e40a21341f8272c9763c039def/23f4071413334e9a83667339719ed1ed.jpg?imwidth=1800", brand: ""},
         {id: 2, font: "Lacoste", price: "111.95", imagePath: "https://img01.ztat.net/article/spp-media-p1/725fb679e7c74782b71fad68f48b9a03/edf76db3189648bb866c0c63115eaabd.jpg?imwidth=1800&filter=packshot", brand: ""},
@@ -18,11 +25,9 @@ const Navbar = () => {
         {id: 8, font: "15", price: "73.95", imagePath: "https://img01.ztat.net/article/spp-media-p1/e9e3174d034f38f09bd7003120e6e91f/ab67f76608a645e68a935aff7a0b52ff.jpg?imwidth=1800", brand: ""}
     ];
 
-    const [basket, setBasket] = useState(() => {
-        const savedBasket = localStorage.getItem('basket');
-        return savedBasket ? JSON.parse(savedBasket) : [];
-    });
-    
+    const handleRemoveFromBasket = (product) => {
+        setBasketItems(prevItems => prevItems.filter(item => item.id !== product.id));
+    };
 
     return (
         <nav className="navbar-container" onMouseLeave={() => setIsHovered(false)}>
@@ -43,22 +48,7 @@ const Navbar = () => {
                     <a href="/basket" className="icon-link" onMouseEnter={() => setIsHovered(true)}>
                         <img src="https://cdn-icons-png.flaticon.com/512/2956/2956820.png" alt="User Icon" className='icon' />
                     </a>
-                    {isHovered && basket && (
-                        basket.map((productId) => {
-                            const product = products.find(product => product.id === productId);
-                            return (
-                                <Item 
-                                    key={product.id} 
-                                    id={product.id} 
-                                    font={product.font} 
-                                    price={product.price} 
-                                    imagePath={product.imagePath} 
-                                    brand={product.brand}
-                                    navBool={false}
-                                />
-                            );
-                        })
-                    )}
+                    
                 </div>
             </div>
         </nav>

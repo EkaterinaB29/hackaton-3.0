@@ -45,7 +45,7 @@ const Address = () => {
                         <label htmlFor="myAddress">My address</label>
                     </div>
                 </div>
-                <button onClick={handleContinue}>Continue</button>
+                <button className='but' onClick={handleContinue}>Continue</button>
             </div>
         </div>
     );

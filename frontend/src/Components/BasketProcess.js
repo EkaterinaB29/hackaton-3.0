@@ -27,7 +27,7 @@ const BasketProcess = ({ basket }) => {
 
     return (
         <div className="basket-process-container">
-            <h1>Your basket ({savedBasket.length} product{savedBasket.length !== 1 ? 's' : ''})</h1>
+            <h1 className='your-basket'>Your basket ({savedBasket.length} product{savedBasket.length !== 1 ? 's' : ''})</h1>
             <div className="basket-additional">
             <div className="basket-items">
                 {savedBasket.map(productId => {
