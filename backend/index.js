@@ -136,6 +136,7 @@ app.listen(PORT, () => {
 });
 
 app.use('/api', require('./routes/userRoute'));
+
 console.log(User); // Check what is imported
 User.findByEmail(connection, 'hackaton@gmail.com').then(user => {
     console.log(user);
