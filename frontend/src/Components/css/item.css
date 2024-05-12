@@ -13,6 +13,10 @@
     text-decoration: none; /* Removes underline */
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for transform and box-shadow */
 }
+a {
+    text-decoration: none;
+    color: black;
+}
 .items p{
     text-decoration: none; /* Removes underline */
 }
