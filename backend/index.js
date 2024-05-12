@@ -47,8 +47,9 @@ app.use((req, res, next) => {
   app.get('/verify-wallet/:email', async (req, res) => {
     try {
         const email = req.params.email;
-        const user = await User.findByEmail(email);
+        const user = await User.findByEmail(connection, email);
         if (!user) {
+            console.log('User not found');
             return res.status(404).send({ error: "User not found" });
         }
 
@@ -56,8 +57,10 @@ app.use((req, res, next) => {
         const balance = await web3.eth.getBalance(walletAddress);
 
         if (web3.utils.toBN(balance).isZero()) {
+            console.log('This wallet has no balance');
             res.send({ status: 'inactive', message: "This wallet has no balance" });
         } else {
+            console.log('This wallet is active with a balance');
             res.send({ status: 'active', message: "This wallet is active with a balance" });
         }
     } catch (error) {
