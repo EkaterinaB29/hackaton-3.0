@@ -34,6 +34,13 @@ const Payment = () => {
     
             // Handle success
             console.log('Payment initiated successfully:', response.data);
+            // if it's a succesful payment, you can redirect the user to the success page
+            // check if response is successful and redirect to the success page
+            // check response success, if true redirect to success page
+            if (response.data.success) {
+                alert('Payment initiated successfully');
+                navigate('/confirm');
+            }
         } catch (error) {
             // Handle error
             console.error('Payment initiation failed:', error.response.data);

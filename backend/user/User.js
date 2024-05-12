@@ -14,11 +14,11 @@ connection.connect(err => {
 });
 */
 class User {
-    constructor(username, email, password) {
+    constructor(username, email, password, walletAddress) {
         this.username = username;
         this.email = email;
         this.password = bcrypt.hashSync(password, 10); // Hash the password
-        this.walletAddress = null;
+        this.walletAddress = walletAddress;
     }
 
     setWalletAddress(walletAddress) {

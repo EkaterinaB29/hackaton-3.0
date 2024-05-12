@@ -36,7 +36,7 @@ router.post('/login', (req, res) => {
                 message: 'Login failed',
                 loggedIn: false
             });
-            console.log('Login failed');
+            2('Login failed');
         }
     });
 }); 
