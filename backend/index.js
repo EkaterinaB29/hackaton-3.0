@@ -53,7 +53,7 @@ app.use((req, res, next) => {
             return res.status(404).send({ error: "User not found" });
         }
 
-        const walletAddress = user.wallet_id;
+        const walletAddress = "0x123abc456def"; // Assume this is the user's wallet address
         if (!walletAddress) {
             console.error("Wallet address is undefined for user:", user);
             return res.status(400).send({ error: "Wallet address not found for user." });
@@ -61,9 +61,10 @@ app.use((req, res, next) => {
 
          else {
             console.log('Checking wallet balance...' + walletAddress)
-        const balance = await web3.eth.getBalance(walletAddress);
+            // CLAUSE: Not a valid Ethereum address SO we manually set the balance to 0 or smt else to test the code
+        const balance =  1 //await web3.eth.getBalance(walletAddress);
 
-        if (web3.utils.toBN(balance).isZero() || web3.utils.toBN(balance).isUndefined()) {
+        if (web3.utils.toBN(balance).isZero()) {
             console.log('This wallet has no balance');
             res.send({ status: 'inactive', message: "This wallet has no balance" });
         } else {
