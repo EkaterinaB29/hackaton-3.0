@@ -28,17 +28,18 @@ router.post('/login', (req, res) => {
             res.json({
                 message: 'Login successful',
                 token: token,
-                loggedin: true
+                loggedIn: true
             });
             console.log('Login successful');
-        } else {
+        } else {                loggedIn: false
+
             res.json({
                 message: 'Login failed',
                 loggedIn: false
             });
             res.json({
                 message: 'Login failed',
-                loggedin: false
+                loggedIn: false
             });
             console.log('Login failed');
         }
