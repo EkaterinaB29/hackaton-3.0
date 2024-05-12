@@ -1,25 +1,20 @@
 const axios = require('axios');
+const cheerio = require('cheerio');
 
-class ApiClient {
-    constructor() {
-        this.client = axios.create({
-            baseURL: 'https://api.coingecko.com/api/v3'
-        });
-    }
-
-    async getRate(crypto, fiat) {
+async function fetchETHRate() {
         try {
-            const response = await this.client.get(`/simple/price?ids=${crypto}&vs_currencies=${fiat}`);
-            if (response.data[crypto] && response.data[crypto][fiat]) {
-                return response.data[crypto][fiat];
-            } else {
-                throw new Error('No rate found');
-            }
+            const url = 'https://www.coingecko.com/en/coins/ethereum'; // Example URL, replace with your target
+            const { data } = await axios.get(url);
+            const $ = cheerio.load(data);
+            const rateText = $('.exchange-rate-price').text(); // Replace with the actual selector for the ETH rate
+            const rate = parseFloat(rateText.replace(/[^\d.-]/g, ''));
+            return rate;
         } catch (error) {
-            console.error("Failed to fetch exchange rate:", error);
+            console.error('Failed to fetch ETH rate:', error);
             throw error;
         }
     }
-}
+
+    ApiClient = fetchETHRate().then(rate => console.log(`Current ETH/EUR rate: €${rate}`));
 
 module.exports = ApiClient;

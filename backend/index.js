@@ -102,22 +102,15 @@ app.use((req, res, next) => {
     }
 });
 
-async function fetchCryptoRate(crypto, fiat) {
-    const apiClient = new ApiClient();
-    try {
-        const rate = await apiClient.getRate(crypto, fiat);
-        console.log(`${crypto} rate for ${fiat} is: ${rate}`);
-        return rate;
-    } catch (error) {
-        console.error('Error fetching crypto rate:', error);
-    }
+async function convertEurosToEthereum(euros) {
+    const rate = await apiClient; // This function is defined in the previous step
+    const eth = euros / rate;
+    return eth;
 }
 
 app.post('/initiate-payment/', async (req, res) => {
     const { email, toAddress, amount } = req.body;
-    const crypto = 'etherium';
-    const fiat = 'eur';
-    console.log(email + ' ' +  toAddress+ ' ' + amount + ' '+walletAddress + crypto + fiat)
+    console.log(email + ' ' +  toAddress+ ' ' + amount + ' '+walletAddress)
     try {
         // Fetch user by email to get the wallet address
         const user = await createUserByEmail(connection, email, walletAddress);
@@ -131,7 +124,7 @@ app.post('/initiate-payment/', async (req, res) => {
             return res.status(400).send({ error: "Insufficient wallet balance" });
         }
 
-        const convertedAmount = await fetchCryptoRate('etherium', 'eur');
+        const convertedAmount = await convertEurosToEthereum(amount);
 
         // Process the payment
         const paymentResult = await paymentProcessor.processPayment(user.walletAddress, toAddress, convertedAmount, crypto, fiat);
