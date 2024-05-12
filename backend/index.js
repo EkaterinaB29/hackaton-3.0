@@ -13,8 +13,9 @@ const jwt = require('jsonwebtoken');
 
 // const PaymentProcessor = require('./PaymentProcessor');
 
-// const PaymentProcessor = require('./services/paymentProcessor');
-// const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
+const PaymentProcessor = require('./services/paymentProcessor');
+const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
+
 async function createUserByEmail(connection, email, wallet) {
     return new Promise((resolve, reject) => {
         const query = 'SELECT * FROM users WHERE email = ?';
