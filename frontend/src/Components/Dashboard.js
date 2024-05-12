@@ -46,6 +46,7 @@ const Dashboard = ({ products }) => {
                         imagePath={product.imagePath} 
                         brand={product.brand}
                         handleAddToBasket={handleAddToBasket} // Pass this function to each Item
+                        navBool={true}
                     />
                 ))}
             </div>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Item = ({ id, name, price, imagePath, brand, font, handleAddToBasket }) => {
-    const product = { id, name, price, imagePath, brand, font };
+const Item = ({ id, name, price, imagePath, brand, font, navBool, handleAddToBasket }) => {
+    const product = { id, name, price, imagePath, brand, font, navBool };
     
     return (
         <div className='items'>
@@ -12,7 +12,8 @@ const Item = ({ id, name, price, imagePath, brand, font, handleAddToBasket }) =>
                 <p>{font}</p>
                 <p>{price}€</p>
             </Link>
-            <button onClick={() => handleAddToBasket(product)}>Add to Basket</button>
+            {navBool && <button onClick={() => handleAddToBasket(product)}>Add to basket</button>}
+            {!navBool && <button onClick={() => handleAddToBasket(product)}>Remove </button>}
         </div>
     );
 };

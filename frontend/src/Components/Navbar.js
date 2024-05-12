@@ -54,6 +54,7 @@ const Navbar = () => {
                                     price={product.price} 
                                     imagePath={product.imagePath} 
                                     brand={product.brand}
+                                    navBool={false}
                                 />
                             );
                         })
