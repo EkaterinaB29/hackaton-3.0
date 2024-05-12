@@ -13,7 +13,6 @@ const jwt = require('jsonwebtoken');
 
 const PaymentProcessor = require('./PaymentProcessor');
 
-const exchangeService = new ExchangeService();
 const PaymentProcessor = require('./services/paymentProcessor');
 const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
 
@@ -82,6 +81,17 @@ app.use((req, res, next) => {
     }
 });
 
+async function fetchCryptoRate(crypto, fiat) {
+    const apiClient = new ApiClient();
+    try {
+        const rate = await apiClient.getRate(crypto, fiat);
+        console.log(`${crypto} rate for ${fiat} is: ${rate}`);
+        return rate;
+    } catch (error) {
+        console.error('Error fetching crypto rate:', error);
+    }
+}
+
 app.post('/initiate-payment/', async (req, res) => {
     const { email, toAddress, amount, crypto, fiat } = req.body;
 
@@ -98,8 +108,7 @@ app.post('/initiate-payment/', async (req, res) => {
             return res.status(400).send({ error: "Insufficient wallet balance" });
         }
 
-        // Convert the currency
-        const convertedAmount = await exchangeService.convertToCurrency(amount, crypto, fiat);
+        const convertedAmount = await fetchCryptoRate('etherium', 'eur');
 
         // Process the payment
         const paymentResult = await paymentProcessor.processPayment(user.walletAddress, toAddress, convertedAmount, crypto, fiat);
