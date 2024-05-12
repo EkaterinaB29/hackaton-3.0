@@ -11,10 +11,11 @@ const blockchainInterface = new BlockchainInterface('https://mainnet.infura.io/v
 const web3 = new Web3 (new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/7f7336b604014a63a4fe74c89f2d8cd5'));
 const jwt = require('jsonwebtoken');
 const walletAddress = '0x123abc456def'; // Assume this is the user's wallet address
+const toAddress = '0x235abc784def'; // Assume this is the recipient's wallet address
 // const PaymentProcessor = require('./PaymentProcessor');
 
-// const PaymentProcessor = require('./services/paymentProcessor');
-// const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
+const PaymentProcessor = require('./services/paymentProcessor');
+
 
 async function createUserByEmail(connection, email, wallet) {
     return new Promise((resolve, reject) => {
@@ -40,8 +41,7 @@ async function createUserByEmail(connection, email, wallet) {
 require('dotenv').config(); // Make sure this is at the top of your main file
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
 
-// Initialize all components
-const apiClient = new ApiClient('https://api.example.com');
+
 
 // const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
 
@@ -124,11 +124,11 @@ app.post('/initiate-payment', async (req, res) => {
         if (web3.utils.toBN(balance).isZero()) {
             return res.status(400).send({ error: "Insufficient wallet balance" });
         }
-
+        const paymentProcessor = new PaymentProcessor(blockchainInterface, user);
         const convertedAmount = await convertEurosToEthereum(amount);
 
         // Process the payment
-        const paymentResult = await paymentProcessor.processPayment(user.walletAddress, toAddress, convertedAmount, crypto, fiat);
+        const paymentResult = await paymentProcessor.processPayment(user.walletAddress, toAddress, convertedAmount);
         if (paymentResult.success) {
             res.status(200).json({
                 message: 'Transaction successful',
