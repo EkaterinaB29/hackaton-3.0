@@ -11,38 +11,38 @@
     background: #fff;
     border-radius: 5px;
 }
+.payment-options{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-bottom: 1em;
 
+}
 .option {
     margin-bottom: 0.5em;
 }
-
 .options label {
     margin-left: 10px;
     display: block; /* Ensure labels appear correctly formatted with inputs */
 }
-
 .credit-card-info input[type="text"], 
 .credit-card-info input[type="checkbox"] {
     display: block;
     margin: 10px 0;
     width: 100%; /* Make sure input fields use the full width */
 }
-
 .credit-card-info input {
     width: 80%; /* Reset width for checkboxes */
     margin: 1em 0 0 0;
 }
-
 .payment-summary {
     background: #f4f4f4;
     padding: 20px;
     border-radius: 5px;
 }
-
 .payment-summary h2 {
     margin-top: 0;
 }
-
 button {
     width: 100%;
     padding: 10px;
@@ -52,16 +52,12 @@ button {
     border-radius: 5px;
     cursor: pointer;
 }
-
 button:hover {
      background-color: #000000; /* Use a more vibrant button color */
 }
-
 #walletAddress{
     margin-top: 1em;
 }
-
 .smaller{
-
     font-size: 0.8em;
 }

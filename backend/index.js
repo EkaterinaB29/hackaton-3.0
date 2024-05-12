@@ -1,5 +1,3 @@
-// const ExchangeService = require('./services/exchangeService');
-// const PaymentProcessor = require('./services/paymentProcessor');
 const ApiClient = require('./api/apiClient');
 const Web3 = require('web3');
 const express = require('express');
@@ -12,6 +10,12 @@ const blockchainInterface = new BlockchainInterface('https://mainnet.infura.io/v
 
 const web3 = new Web3 (new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/7f7336b604014a63a4fe74c89f2d8cd5'));
 const jwt = require('jsonwebtoken');
+
+const PaymentProcessor = require('./PaymentProcessor');
+
+const exchangeService = new ExchangeService();
+const PaymentProcessor = require('./services/paymentProcessor');
+const paymentProcessor = new PaymentProcessor(blockchainInterface, exchangeService);
 
 require('dotenv').config(); // Make sure this is at the top of your main file
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
@@ -43,7 +47,6 @@ app.use((req, res, next) => {
 
   
 
-
   app.get('/verify-wallet/:email', async (req, res) => {
     try {
         const email = req.params.email;
@@ -70,6 +73,7 @@ app.use((req, res, next) => {
         } else {
             console.log('This wallet is active with a balance');
             res.send({ status: 'active', message: "This wallet is active with a balance" });
+
         }
     }
     } catch (error) {
@@ -77,57 +81,48 @@ app.use((req, res, next) => {
         res.status(500).send({ error: "Server error" });
     }
 });
-app.get('/verify-token', (req, res) => {
-    const token = req.headers['x-access-token'];
 
-    if (!token) {
-        return res.status(401).send('Token not provided');
-    }
+app.post('/initiate-payment/', async (req, res) => {
+    const { email, toAddress, amount, crypto, fiat } = req.body;
 
-    jwt.verify(token, 'your_secret_key', (err, decoded) => {
-        if (err) {
-            return res.status(500).send('Token verification failed');
-        }
-
-        res.send(decoded);
-    });
-});
-
-
-  app.post('/transaction', async (req, res) => {
-    const { email, toAddress, amount } = req.body;
     try {
-        const user = await User.findByEmail(email);
-        if (!user) {
-            return res.status(404).send('User not found');
+        // Fetch user by email to get the wallet address
+        const user = await User.findByEmail(connection, email);
+        if (!user || !user.walletAddress) {
+            return res.status(404).send({ error: "User or wallet not found" });
         }
 
-        const fromAddress = user.walletAddress;
-        // Assume processPayment is a function you've defined to handle the payment logic
-        const paymentResult = await processPayment(fromAddress, toAddress, amount);
+        // Check the wallet balance or other conditions if necessary
+        const balance = await web3.eth.getBalance(user.walletAddress);
+        if (web3.utils.toBN(balance).isZero()) {
+            return res.status(400).send({ error: "Insufficient wallet balance" });
+        }
 
+        // Convert the currency
+        const convertedAmount = await exchangeService.convertToCurrency(amount, crypto, fiat);
+
+        // Process the payment
+        const paymentResult = await paymentProcessor.processPayment(user.walletAddress, toAddress, convertedAmount, crypto, fiat);
         if (paymentResult.success) {
-            res.status(201).send({
+            res.status(200).json({
                 message: 'Transaction successful',
-                transactionId: paymentResult.transactionId
+                details: paymentResult
             });
         } else {
-            res.status(400).send('Transaction failed');
+            res.status(400).send({ error: 'Transaction failed' });
         }
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error');
+        console.error('Error initiating payment:', error);
+        res.status(500).send({ error: 'Internal server error' });
     }
-
 });
+
 // Test Web3 functionality
 console.log(web3.version);
 
 web3.eth.net.isListening()
     .then(() => console.log('Successfully connected to the Ethereum network'))
     .catch(e => console.error('Something went wrong connecting to the Ethereum network:', e));
-
-
 
 
 const PORT = process.env.PORT || 6500;

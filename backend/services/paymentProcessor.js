@@ -1,26 +1,36 @@
 class PaymentProcessor {
-    constructor(blockchainInterface, exchangeService) {
+    constructor(blockchainInterface, exchangeService, db) {
         this.blockchainInterface = blockchainInterface;
         this.exchangeService = exchangeService;
+        this.db = db;  // Database access for user and wallet information
     }
 
-    async processPayment(wallet, toAddress, amount, crypto, fiat) {
+    async processPayment(fromAddress, toAddress, amount, crypto, fiat) {
         try {
-            // Assumes wallet object includes necessary methods and properties like createTransaction
-            const transaction = wallet.createTransaction(toAddress, amount);
-            const txResult = await this.blockchainInterface.sendTransaction(transaction);
+            // Convert the amount from the original currency (crypto) to the desired currency (fiat or another crypto)
             const convertedAmount = await this.exchangeService.convertToCurrency(amount, crypto, fiat);
-            
+            const amountInWei = this.blockchainInterface.web3.utils.toWei(convertedAmount.toString(), 'ether');
+
+            // Create the transaction object
+            const transaction = {
+                from: fromAddress,
+                to: toAddress,
+                value: amountInWei,  // Ensure this is the correct format for the blockchain interface
+                gas: 21000,  // Standard gas limit for ETH transfers, adjust based on transaction complexity
+                gasPrice: await this.blockchainInterface.web3.eth.getGasPrice()  // Fetch current gas price
+            };
+
+            // Send the transaction to the blockchain
+            const txResult = await this.blockchainInterface.sendTransaction(transaction);
+
             return {
-                transaction: txResult,
+                success: true,
+                transactionId: txResult.transactionHash,  // Assuming sendTransaction resolves with a result containing the transactionHash
                 convertedAmount: convertedAmount
             };
         } catch (error) {
             console.error("Payment processing failed:", error);
-            throw error;
-            //consol.log
+            return { success: false, error: error.message };
         }
     }
 }
-
-
