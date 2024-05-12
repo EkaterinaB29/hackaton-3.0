@@ -1,40 +1,36 @@
-const jwt = require('jsonwebtoken');
-const SECRET_KEY = 'your_secret_key';
-
 class PaymentProcessor {
-    constructor(blockchainInterface, exchangeService, userDb) {
+    constructor(blockchainInterface, exchangeService, db) {
         this.blockchainInterface = blockchainInterface;
         this.exchangeService = exchangeService;
-        this.userDb = userDb;  // Database access for user validation
+        this.db = db;  // Database access for user and wallet information
     }
 
-    async processPayment(token, toAddress, amount, crypto, fiat) {
+    async processPayment(fromAddress, toAddress, amount, crypto, fiat) {
         try {
-            // Decode and verify the token
-            const decoded = jwt.verify(token, SECRET_KEY);
-            const user = await this.userDb.findByEmail(decoded.email);  // Assume email is part of the token payload
+            // Convert the amount from the original currency (crypto) to the desired currency (fiat or another crypto)
+            const convertedAmount = await this.exchangeService.convertToCurrency(amount, crypto, fiat);
+            const amountInWei = this.blockchainInterface.web3.utils.toWei(convertedAmount.toString(), 'ether');
 
-            if (!user) {
-                throw new Error('User not found or invalid token');
-            }
+            // Create the transaction object
+            const transaction = {
+                from: fromAddress,
+                to: toAddress,
+                value: amountInWei,  // Ensure this is the correct format for the blockchain interface
+                gas: 21000,  // Standard gas limit for ETH transfers, adjust based on transaction complexity
+                gasPrice: await this.blockchainInterface.web3.eth.getGasPrice()  // Fetch current gas price
+            };
 
-            // Retrieve user's wallet from database
-            const wallet = await this.userDb.getWallet(user.id);
-
-            // Create transaction
-            const transaction = wallet.createTransaction(toAddress, amount);
+            // Send the transaction to the blockchain
             const txResult = await this.blockchainInterface.sendTransaction(transaction);
 
-            // Handle currency conversion
-            const convertedAmount = await this.exchangeService.convertToCurrency(amount, crypto, fiat);
-
             return {
-                transaction: txResult,
+                success: true,
+                transactionId: txResult.transactionHash,  // Assuming sendTransaction resolves with a result containing the transactionHash
                 convertedAmount: convertedAmount
             };
         } catch (error) {
             console.error("Payment processing failed:", error);
-            throw error;
+            return { success: false, error: error.message };
         }
     }
 }
