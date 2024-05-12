@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between; /* Align items to the edges */
     align-items: center;
-    background-color: #c2c2c2; /* Grey background, change as needed */
+    background-color: #81b22749; /* Use a more vibrant button color */
     padding: 1em 2em; /* Top and bottom padding, adjust side padding to push content to edges */
 }
 
