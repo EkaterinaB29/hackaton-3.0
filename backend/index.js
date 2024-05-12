@@ -50,7 +50,8 @@ const connection = mysql2.createConnection({ // RETRIEVE YOUR DATABASE CREDENTIA
     user: 'hackaton',
     password: 'pepe',
     database: 'hackaton'
-});
+});const crypto = 'etherium';
+const fiat = 'eur';
 connection.connect(err => {
     if (err) throw err;
     console.log("Connected to the database successfully!");
