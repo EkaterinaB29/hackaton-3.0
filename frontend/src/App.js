@@ -8,6 +8,7 @@ import BasketProcess from './Components/BasketProcess';
 import { useEffect } from 'react';
 import Address from './Components/Address';
 import Payment from './Components/Payment';
+import Confirm from './Components/Confirm';
 
 function App() {
   const [basket, setBasket] = useState(() => {
@@ -53,6 +54,7 @@ const addToBasket = (productId) => {
           <Route path="/basket" element={<BasketProcess basket={basket} />} />
           <Route path="/address" element={<Address />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/confirm" element={<Confirm />} />
         </Routes>
       </div>
     </Router>
