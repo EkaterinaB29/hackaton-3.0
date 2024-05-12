@@ -52,7 +52,7 @@ app.use((req, res, next) => {
             console.log('User not found');
             return res.status(404).send({ error: "User not found" });
         }
-
+        console.log('User found:', user);
         const walletAddress = "0x123abc456def"; // Assume this is the user's wallet address
         if (!walletAddress) {
             console.error("Wallet address is undefined for user:", user);
@@ -62,8 +62,8 @@ app.use((req, res, next) => {
          else {
             console.log('Checking wallet balance...' + walletAddress)
             // CLAUSE: Not a valid Ethereum address SO we manually set the balance to 0 or smt else to test the code
-        const balance =  1 //await web3.eth.getBalance(walletAddress);
-
+        const balance =  1 //IF REAL KEY WAS GIVEN --- await web3.eth.getBalance(walletAddress);
+        
         if (web3.utils.toBN(balance).isZero()) {
             console.log('This wallet has no balance');
             res.send({ status: 'inactive', message: "This wallet has no balance" });
@@ -103,7 +103,6 @@ app.get('/verify-token', (req, res) => {
         }
 
         const fromAddress = user.walletAddress;
-        // Assume processPayment is a function you've defined to handle the payment logic
         const paymentResult = await processPayment(fromAddress, toAddress, amount);
 
         if (paymentResult.success) {
